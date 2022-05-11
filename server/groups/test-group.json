@@ -1,0 +1,581 @@
+{
+  "permittedUsers": [
+    "fox",
+    "chrome",
+    "chrome",
+    "chrome"
+  ],
+  "requestedUsers": [],
+  "chat": [
+    {
+      "fox": "hello"
+    },
+    {
+      "chrome": "how you do?"
+    },
+    {
+      "fox": "Me do good "
+    },
+    {
+      "chrome": "did you complete your homework"
+    },
+    {
+      "fox": "Not yet, i still have to finish it...."
+    },
+    {
+      "chrome": ",,,"
+    },
+    {
+      "chrome": ",,,jfj"
+    },
+    {
+      "fox": ","
+    },
+    {
+      "fox": "how you do"
+    },
+    {
+      "fox": "how you dom,,"
+    },
+    {
+      "chrome": ",f,f"
+    },
+    {
+      "chrome": ","
+    },
+    {
+      "chrome": "I have, to "
+    },
+    {
+      "fox": "i ., "
+    },
+    {
+      "chrome": "I still have to do it, jjg"
+    },
+    {
+      "chrome": "I will still have to complete my home work"
+    },
+    {
+      "fox": "so, yeah"
+    },
+    {
+      "chrome": "sdaf"
+    },
+    {
+      "chrome": "sdafff"
+    },
+    {
+      "fox": "asdf"
+    },
+    {
+      "chrome": "sdafffss"
+    },
+    {
+      "fox": "rushabh"
+    },
+    {
+      "chrome": "sdafffss"
+    },
+    {
+      "fox": "rushabh"
+    },
+    {
+      "chrome": "sdafffss"
+    },
+    {
+      "fox": "I have to still complete my homework, so yeah"
+    },
+    {
+      "chrome": "Hello wod"
+    },
+    {
+      "chrome": "Hello wod"
+    },
+    {
+      "fox": "hwo tou g"
+    },
+    {
+      "chrome": "Hello wod"
+    },
+    {
+      "chrome": "Hello wod"
+    },
+    {
+      "fox": "how you do?"
+    },
+    {
+      "fox": "hello wordl"
+    },
+    {
+      "chrome": "f"
+    },
+    {
+      "chrome": "asdf"
+    },
+    {
+      "chrome": "asdf"
+    },
+    {
+      "fox": "RUshabh"
+    },
+    {
+      "fox": "Hell world"
+    },
+    {
+      "fox": "rushabh"
+    },
+    {
+      "chrome": "yah"
+    },
+    {
+      "fox": "Hello world"
+    },
+    {
+      "fox": "rushabh"
+    },
+    {
+      "fox": "asdf"
+    },
+    {
+      "fox": "Hello world"
+    },
+    {
+      "fox": "ykjhsdkfjhj"
+    },
+    {
+      "fox": "asdf"
+    },
+    {
+      "fox": "this is now working"
+    },
+    {
+      "fox": "IDK what is going on?"
+    },
+    {
+      "fox": "Yehalle"
+    },
+    {
+      "fox": "this is good now"
+    },
+    {
+      "chrome": "Yeh"
+    },
+    {
+      "chrome": "yHei"
+    },
+    {
+      "chrome": "lest fo "
+    },
+    {
+      "chrome": "this is now working"
+    },
+    {
+      "chrome": "Yesh"
+    },
+    {
+      "chrome": "Yehs this now workign"
+    },
+    {
+      "chrome": "Yehs this now workign"
+    },
+    {
+      "chrome": "Yehs this now Yeh"
+    },
+    {
+      "chrome": "yesh"
+    },
+    {
+      "chrome": "yehs"
+    },
+    {
+      "chrome": "hwo yj"
+    },
+    {
+      "chrome": "yesh"
+    },
+    {
+      "chrome": "rushabh"
+    },
+    {
+      "chrome": "yesh"
+    },
+    {
+      "chrome": "rushabh"
+    },
+    {
+      "chrome": "rushabhyesh"
+    },
+    {
+      "chrome": "yesh"
+    },
+    {
+      "chrome": "rysg"
+    },
+    {
+      "chrome": "yesh"
+    },
+    {
+      "chrome": "yesh"
+    },
+    {
+      "chrome": "yesh"
+    },
+    {
+      "chrome": "yesh"
+    },
+    {
+      "chrome": "halleo"
+    },
+    {
+      "chrome": "halleo"
+    },
+    {
+      "chrome": "halleo"
+    },
+    {
+      "chrome": "halleo"
+    },
+    {
+      "chrome": "how you do?"
+    },
+    {
+      "chrome": "I do well sar"
+    },
+    {
+      "chrome": "I do well sar"
+    },
+    {
+      "chrome": "dgdg"
+    },
+    {
+      "chrome": "dgdg"
+    },
+    {
+      "chrome": "dgdg"
+    },
+    {
+      "chrome": "dgdg"
+    },
+    {
+      "fox": "how tou go"
+    },
+    {
+      "fox": "asd"
+    },
+    {
+      "fox": "asf"
+    },
+    {
+      "fox": "asdf"
+    },
+    {
+      "fox": "sadf"
+    },
+    {
+      "fox": "sadf"
+    },
+    {
+      "fox": "sdaf"
+    },
+    {
+      "fox": "sadfsdaf"
+    },
+    {
+      "fox": "sadfsdaf"
+    },
+    {
+      "fox": "sadfsdaf"
+    },
+    {
+      "fox": "sdaf"
+    },
+    {
+      "fox": "tu"
+    },
+    {
+      "fox": "how you do>"
+    },
+    {
+      "chrome": "how tou sdo"
+    },
+    {
+      "chrome": "I like to use this app"
+    },
+    {
+      "chrome": "how you do saar>"
+    },
+    {
+      "fox": "are you doing well?"
+    },
+    {
+      "chrome": "how "
+    },
+    {
+      "chrome": "rushabh"
+    },
+    {
+      "chrome": "rushabh"
+    },
+    {
+      "chrome": "rushabh"
+    },
+    {
+      "chrome": "rushabh"
+    },
+    {
+      "chrome": "ghg"
+    },
+    {
+      "chrome": "ghg"
+    },
+    {
+      "chrome": "ghg"
+    },
+    {
+      "chrome": "ghg"
+    },
+    {
+      "chrome": "how you do>"
+    },
+    {
+      "chrome": "how you do>"
+    },
+    {
+      "chrome": "how you do?"
+    },
+    {
+      "chrome": "Hello wordl"
+    },
+    {
+      "chrome": "Yehaio"
+    },
+    {
+      "chrome": "Yehaio"
+    },
+    {
+      "chrome": "Hello world"
+    },
+    {
+      "chrome": "how you do>"
+    },
+    {
+      "chrome": "how you do>"
+    },
+    {
+      "chrome": "yallow"
+    },
+    {
+      "fox": "how you do?"
+    },
+    {
+      "fox": "I do good.."
+    },
+    {
+      "chrome": "me too ig"
+    },
+    {
+      "chrome": "wallo"
+    },
+    {
+      "chrome": "wallo"
+    },
+    {
+      "chrome": "wallo"
+    },
+    {
+      "chrome": "wallo"
+    },
+    {
+      "chrome": "wallo"
+    },
+    {
+      "chrome": "wallo"
+    },
+    {
+      "fox": "H"
+    },
+    {
+      "fox": "yehal"
+    },
+    {
+      "fox": "how you do?"
+    },
+    {
+      "fox": "how you do?"
+    },
+    {
+      "fox": "how you do?"
+    },
+    {
+      "fox": "how you do?"
+    },
+    {
+      "fox": "this is working"
+    },
+    {
+      "fox": "this is working"
+    },
+    {
+      "fox": "how "
+    },
+    {
+      "fox": "how "
+    },
+    {
+      "fox": "HOW"
+    },
+    {
+      "fox": "does this workig"
+    },
+    {
+      "fox": "does this workig"
+    },
+    {
+      "fox": "does this workig"
+    },
+    {
+      "fox": "does this workig"
+    },
+    {
+      "fox": "this now workis"
+    },
+    {
+      "fox": "how you do?"
+    },
+    {
+      "fox": "how you do?"
+    },
+    {
+      "fox": "this works without errs"
+    },
+    {
+      "fox": "how you do>"
+    },
+    {
+      "fox": "jgj"
+    },
+    {
+      "fox": "jgjg"
+    },
+    {
+      "fox": "jgjg"
+    },
+    {
+      "fox": "jgjg"
+    },
+    {
+      "fox": "how you do"
+    },
+    {
+      "chrome": "how you do?"
+    },
+    {
+      "chrome": "me do good"
+    },
+    {
+      "fox": "rushabh"
+    },
+    {
+      "fox": "rushabh"
+    },
+    {
+      "fox": "hwo you"
+    },
+    {
+      "fox": "hwo you"
+    },
+    {
+      "fox": "this actually work"
+    },
+    {
+      "chrome": "how you do saarr"
+    },
+    {
+      "fox": "me do good sarr"
+    },
+    {
+      "chrome": "what about you"
+    },
+    {
+      "fox": "don't even talk abtou it"
+    },
+    {
+      "chrome": "what about you, salkdjf;laskjdf;lkj"
+    },
+    {
+      "fox": "this is didi"
+    },
+    {
+      "chrome": "From iPad "
+    },
+    {
+      "fox": "this is now working"
+    },
+    {
+      "chrome": "From iPad "
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjq"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjqdsfgsdg"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjqdsfgsdg"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjqdsfgsdg"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjqdsfgsdg"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjqdsfgsdg"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjqdsfgsdg"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjqdsfgsdg"
+    },
+    {
+      "fox": "tjos os ijs;dfijg;lkjqdsfgsdg"
+    }
+  ]
+}
