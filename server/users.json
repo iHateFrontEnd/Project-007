@@ -1,34 +1,38 @@
 {
-    "users": [
-        {
-            "username": "fox",
-            "password": "000",
-            "friends": [
-                "chrome"
-            ],
-            "groups": [
-                "test-group"
-            ],
-            "incomingRequests": [],
-            "sentRequest": [
-                "chrome"
-            ]
-        },
-        {
-            "username": "chrome",
-            "password": "000",
-            "friends": [
-                "fox"
-            ],
-            "groups": [
-                "test-group",
-                "test-group",
-                "test-group"
-            ],
-            "incomingRequests": [],
-            "sentRequest": [
-                "fox"
-            ]
-        }
-    ]
+  "users": [
+    {
+      "username": "fox",
+      "password": "000",
+      "friends": [],
+      "groups": [
+        "test-group"
+      ],
+      "incomingRequests": [],
+      "sentRequest": []
+    },
+    {
+      "username": "chrome",
+      "password": "000",
+      "friends": [
+        "rushabh"
+      ],
+      "groups": [
+        "test-group"
+      ],
+      "incomingRequests": [],
+      "sentRequest": []
+    },
+    {
+      "username": "rushabh",
+      "password": "000",
+      "friends": [
+        "chrome"
+      ],
+      "groups": [
+        "test-group"
+      ],
+      "incomingRequests": [],
+      "sentRequest": []
+    }
+  ]
 }

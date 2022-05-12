@@ -4,7 +4,7 @@ const fs = require('fs');
 const app = express();
 const io = require('socket.io')(5000, {
   cors: {
-    origin: ['http://192.168.0.168:3000']
+    origin: ['http://localhost:3000']
   }
 });
 const configFile = require('./config.json');
@@ -12,7 +12,7 @@ const usersFile = require('./users.json');
 app.use(express.json());
 app.use(
   cors({
-    origin: 'http://192.168.0.168:3000'
+    origin: 'http://localhost:3000'
   })
 );
 
@@ -32,6 +32,40 @@ io.on('connection', socket => {
 
     io.emit('recive-msg', group.chat);
   });
+
+  //accepting friend request 
+  socket.on('accept-request', (data) => {
+    //this is the user who sent the request
+    const toAcceptUser = data.toAcceptUser;
+    var toAcceptUserIndex = -1;
+
+    //this is the user who accepted the request
+    const userIndex = data.userIndex;
+    const username = usersFile.users[userIndex].username;
+
+    //finding toAcceptUserIndex
+    for (let i = 0; i <= usersFile.users.length; i++) {
+      toAcceptUserIndex++;
+
+      if (usersFile.users[i].username == toAcceptUser) {
+        break;
+      }
+    }
+
+    usersFile.users[userIndex].incomingRequests.splice(toAcceptUser, 1);
+    usersFile.users[userIndex].friends.push(toAcceptUser);
+
+    usersFile.users[toAcceptUserIndex].sentRequest.splice(username, 1);
+    usersFile.users[toAcceptUserIndex].friends.push(username);
+
+    fs.writeFile('./users.json', JSON.stringify(usersFile, null, 2), (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    io.emit('added-friend', username);
+  });
 });
 
 //importing routes
@@ -46,7 +80,6 @@ const changePassword = require('./routes/change-password');
 const loadFriendRequests = require('./routes/load-friend-requests');
 const acceptRequest = require('./routes/accept-request');
 const declineRequest = require('./routes/decline-request');
-const saveGroupChat = require('./routes/save-group-chat');
 const reloadChat = require('./routes/reload-chat');
 const addPerson = require('./routes/add-person');
 const loadGroups = require('./routes/load-groups');
@@ -88,9 +121,6 @@ app.use('/accept-request', acceptRequest);
 
 //declining a request
 app.use('/decline-request', declineRequest);
-
-//saving group chat to a .json file
-app.use('/save-group-chat', saveGroupChat);
 
 //adding people to a group
 app.use('/add-person', addPerson);
