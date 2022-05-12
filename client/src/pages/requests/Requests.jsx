@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import configFile from '../../config.json';
 import Homepage from '../../components/homepage/Homepage';
 import Logo from '../../components/homepage/Logo';
+import App from '../../App';
 import { io } from 'socket.io-client';
 import './Requests.css';
 
@@ -33,44 +34,36 @@ function renderHomepage() {
     );
 }
 
+const socket = io(configFile.websocketServerURL);
+
 //accepting friend requests
-function acceptRequest(acceptedUserIndex, acceptedUsername) {
-    let req = { 
-        toAcceptUser: acceptedUsername,
-        userIndex: user.userindex,
-        toAcceptUserIndex: acceptedUserIndex
-    }
-
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            toAcceptUser: acceptedUsername,
-            userIndex: user.userIndex,
-            toAcceptUserIndex: acceptedUserIndex
-        })
-    }
-
-    const socket = io(configFile.serverURL);
-
-    fetch(`${configFile.serverURL}/accept-request`, options);
-
-    socket.on('connect', data => {
-        socket.emit('accept-request', req);
-
-        socket.on('added-friend', (chatData) => {
-            console.log(chatData);
-        });
-    });
-
+function acceptRequest(acceptedUsername) {
+    var chatData = JSON.parse(localStorage.getItem('chatData'));
     chatData.friends.push(acceptedUsername);
 
-    localStorage.setItem('chatData', JSON.stringify(chatData));
+    localStorage.setItem('chatData', JSON.stringify(chatData))
 
-    //window.location.reload()
+    const req = {
+        toAcceptUser: acceptedUsername,
+        userIndex: user.userIndex
+    }
+
+    socket.emit('accept-request', req);
+
+    window.location.reload();
 }
+
+socket.on('added-friend', (friendsUsername) => {
+    if (user.username === friendsUsername) {
+        var chatData = JSON.parse(localStorage.getItem('chatData'));
+        chatData.friends.push(friendsUsername);
+
+        localStorage.setItem('chatData', JSON.stringify(chatData));
+
+        window.location.reload();
+        window.location.reload();
+    }
+});
 
 //decling friend requests
 async function declineRequest(declinedUserIndex) {
@@ -125,7 +118,7 @@ export default async function loadFriendRequests() {
                 <div className='requests'>
                     <h4>{data.requests[i]}</h4>
 
-                    <button onClick={() => acceptRequest(i, data.requests[i])} className='accept'>✓</button>
+                    <button onClick={() => acceptRequest(data.requests[i])} className='accept'>✓</button>
 
                     <button onClick={() => declineRequest(i)} className='decline'>X</button>
                 </div>

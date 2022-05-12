@@ -14,8 +14,8 @@ function renderProfile() {
 }
 
 function signOut() {
-  localStorage.removeItem('chatData');
-  localStorage.removeItem('user');
+  localStorage.clear();
+  sessionStorage.clear();
 
   ReactDOM.render(
     <Login />, document.getElementById('root')
@@ -26,9 +26,9 @@ export default class TopBar extends React.Component {
   render() {
     return (
       <div className="topBar">
-        <img className='topBarBtns' onClick={signOut} alt='Sign out' />
-        <img className='topBarBtns' onClick={loadFriendRequests} alt='Incoming friend requests' />
-        <img className='topBarBtns' onClick={renderProfile} alt='Profile' />
+        <button className='topBarBtns' onClick={signOut}>Sign out</button>
+        <button className='topBarBtns' onClick={loadFriendRequests}>Incoming friend requests</button>
+        <button className='topBarBtns' onClick={renderProfile}>Profile</button>
       </div>
     );
   }

@@ -8,8 +8,6 @@ async function addPerson() {
   const toAddPerson = document.getElementById('personsUsername').value;
   var user = JSON.parse(localStorage.getItem('user'));
 
-  const socket = io(configFile.serverURL);
-
   if (toAddPerson != '') {
     const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
 
@@ -31,18 +29,6 @@ async function addPerson() {
       alert(`User ${toAddPerson} does not exist :(, please try again with a proper username`);
     } else {
       alert(`User ${toAddPerson} is now a member of this group :)`);
-
-      socket.on('connect', () => {
-        socket.emit('add-person', {
-          userIndex: data.userIndex,
-          toAdd: toAddPerson
-        });
-
-        socket.on('added-person', (addedPerson) => {
-          console.log('Hello world');
-          console.log(addedPerson);
-        });
-      });
     }
   } else {
     alert('Please enter a proper username');

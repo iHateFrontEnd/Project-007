@@ -8,18 +8,16 @@ import Homepage from '../homepage/Homepage';
 import configFile from '../../config.json';
 import './GroupChat.css';
 
-var msgArr = [];
-
-const socket = io(configFile.websocketServerURL);
-
 export default function GroupChat(msgArr) {
   //updating the chat
   const sendMsg = async () => {
     const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
     const user = JSON.parse(localStorage.getItem('user'));
-    const typedMsg = document.getElementById('msg').value;
-
+    var typedMsg = document.getElementById('msg').value;
     const msg = JSON.parse(sessionStorage.getItem('rawMsg'));
+
+    const socket = io(configFile.websocketServerURL);
+
     socket.emit('send-msg', msg, user.username, typedMsg, currentGroupData.groupName);
 
     //updating the messages
@@ -39,6 +37,9 @@ export default function GroupChat(msgArr) {
       var chatDiv = document.getElementById('chat');
       chatDiv.scrollTop = chatDiv.scrollHeight;
     });
+
+    //clearing the msg input
+    document.getElementById('msg').value = '';
   }
 
   return (

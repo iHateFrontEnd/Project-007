@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
-table {
-    margin-bottom: 2vh;
-    margin-left: 2vh;
-    margin-right: 2vh;
-}
-
 .navBarTd {
     background-image: linear-gradient(to left, #3F0DDC, #340BB9);
     height: 90vh;
@@ -65,7 +59,4 @@ h2 {
     border-style: solid;
     border-color: white;
     color: white;
-}
-
-.renderTd {
 }

@@ -34,6 +34,7 @@ function trimMsg(data) {
   ReactDOM.render(
     <Homepage frame={GroupChat(msgArr)} />, document.getElementById('root')
   );
+
 }
 
 export default async function renderGroupChat(groupIndex, toUse) {

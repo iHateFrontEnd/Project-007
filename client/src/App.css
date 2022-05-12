@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
 /*globals*/
+.root {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
 h1 {
     font-family: 'Poppins', sans-serif;
     font-size: 8vh;
@@ -24,11 +32,8 @@ h4 {
 }
 
 .renderTd {
-    background-image: linear-gradient(to left,  #340BB9, #3F0DDC);
+    background-image: linear-gradient(to left, #340BB9, #3F0DDC);
     border-radius: 5vh;
-    width: 188vh;
-    margin-left: 2vh;
-    border-style: none;
     height: 70vh;
 }
 
@@ -46,10 +51,6 @@ h4 {
 }
 
 
-/*sign up*/
-/*login*/
-/* homepage */
-/*logo*/
 .logo {
     text-align: center;
 }
@@ -70,8 +71,3 @@ h4 {
     text-align: center;
     scrollbar-width: normal;
 }
-
-/*profile page*/
-
-
-/*incoming requests page*/

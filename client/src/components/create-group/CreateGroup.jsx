@@ -31,7 +31,7 @@ async function saveGroup() {
     chatData.groups.push(groupName);
     localStorage.setItem('chatData', JSON.stringify(chatData));
 
-    await window.location.reload();
+    window.location.reload();
 }
 
 const CreateGroup = (

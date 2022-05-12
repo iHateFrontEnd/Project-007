@@ -2,50 +2,18 @@
   "permittedUsers": [
     "fox",
     "chrome",
-    "chrome",
-    "chrome",
     "rushabh"
   ],
   "requestedUsers": [],
   "chat": [
     {
-      "chrome": "how you do???"
+      "fox": "how you like me now?"
     },
     {
-      "rushabh": "me doo well saar"
+      "fox": ""
     },
     {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
-    },
-    {
-      "chrome": "sjdkfkjasfdh"
+      "fox": "asdf"
     }
   ]
 }

@@ -78,11 +78,11 @@ const createGroup = require('./routes/create-group');
 const changeUsername = require('./routes/change-username');
 const changePassword = require('./routes/change-password');
 const loadFriendRequests = require('./routes/load-friend-requests');
-const acceptRequest = require('./routes/accept-request');
 const declineRequest = require('./routes/decline-request');
 const reloadChat = require('./routes/reload-chat');
 const addPerson = require('./routes/add-person');
 const loadGroups = require('./routes/load-groups');
+const leaveGroup = require('./routes/leave-group');
 
 app.get('/', (req, res) => {
   res.send('Hello world');
@@ -112,12 +112,11 @@ app.use('/create-group', createGroup);
 //changing username
 app.use('/change-username', changeUsername);
 
-//changing password app.use('/change-password', changePassword);
+//changing password 
+app.use('/change-password', changePassword);
+
 //loading friend requests
 app.use('/load-friend-requests', loadFriendRequests);
-
-//accepting a friend request
-app.use('/accept-request', acceptRequest);
 
 //declining a request
 app.use('/decline-request', declineRequest);
@@ -127,5 +126,8 @@ app.use('/add-person', addPerson);
 
 //loading groups
 app.use('/load-groups', loadGroups);
+
+//leaving group 
+app.use('/leave-group', leaveGroup);
 
 app.listen(4000);

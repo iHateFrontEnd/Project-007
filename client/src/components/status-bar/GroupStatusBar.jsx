@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Scrollbars from 'react-custom-scrollbars-2';
 import AddPeople from '../group-chat/AddPeople';
 import Homepage from '../homepage/Homepage';
+import configFile from '../../config.json';
 import './StatusBar.css';
-import { useEffect } from 'react';
-
 
 function addPeople() {
   ReactDOM.render(
@@ -14,7 +12,31 @@ function addPeople() {
 }
 
 function leaveGroup() {
-  //write code to leave group
+  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  //changing the users.json file using server
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      groupName: currentGroupData.groupName,
+      userIndex: user.userIndex,
+      username: user.username
+    })
+  }
+
+  fetch(`${configFile.serverURL}/leave-group`, options);
+
+  //changing chatData in localStorage()
+  var chatData = JSON.parse(localStorage.getItem('chatData'));
+  chatData.groups.splice(currentGroupData.groupName, 1);
+  
+  localStorage.setItem('chatData', JSON.stringify(chatData));
+
+  window.location.reload();
 }
 
 function renderSettings() {

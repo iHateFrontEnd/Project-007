@@ -47,6 +47,14 @@ function renderChatData() {
   }
 }
 
+//this try catch block is used to scroll to the bottom of the chat div
+try {
+  var chatDiv = document.getElementById('root')
+  chatDiv.scrollTop = chatDiv.scrollHeight;
+} catch (err) {
+  console.log(err);
+}
+
 renderChatData();
 
 //this function pushes the buttons for groups
