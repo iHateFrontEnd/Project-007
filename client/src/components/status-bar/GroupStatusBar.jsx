@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AddPeople from '../group-chat/AddPeople';
 import Homepage from '../homepage/Homepage';
+import Settings from '../group-chat/settings/Settings';
 import configFile from '../../config.json';
 import './StatusBar.css';
 
@@ -33,14 +34,16 @@ function leaveGroup() {
   //changing chatData in localStorage()
   var chatData = JSON.parse(localStorage.getItem('chatData'));
   chatData.groups.splice(currentGroupData.groupName, 1);
-  
+
   localStorage.setItem('chatData', JSON.stringify(chatData));
 
   window.location.reload();
 }
 
 function renderSettings() {
-  //make a settings page
+  ReactDOM.render(
+    <Homepage frame={Settings()} />, document.getElementById('root')
+  );
 }
 
 export default function GroupStatusBar() {
