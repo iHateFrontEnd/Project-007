@@ -31,7 +31,8 @@ h1 {
     color: black;
     font-family: 'Poppins', sans-serif;
     font-size: 3vh;
-    border-style: solid 1vh;
+    border-style: solid;
+    border-width: 0.2vh;
     border-color: black;
     height: 8vh;
     width: 40vh;
@@ -65,4 +66,82 @@ h1 {
     border-style: none;
     font-family: 'Poppins', sans-serif;
     font-size: 4vh;
+}
+
+.group-members-container {
+    background-color: white;
+    height: 82vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
+    overflow-x: scroll;
+    padding-left: 3vh;
+    padding-top: 3vh;
+    border-radius: 3vh;
+    border-style: none;
+    overflow-y: scroll;
+}
+
+li {
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-size: 4vh;
+}
+
+.back-btn {
+    background-color: white;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-size: 5vh;
+    border-style: solid;
+    border-width: 0.2vh;
+    border-color: black;
+    height: 15vh;
+    width: 60vh;
+    border-radius: 3vh;
+    margin-bottom: 5vh;
+}
+
+.back-btn-container {
+    padding-top: 8vh;
+    text-align: center;
+}
+
+ul {
+    margin-left: 24vh;
+}
+
+.remove-users-containter {
+    background-color: white;
+    height: 82vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
+    padding-left: 3vh;
+    padding-top: 3vh;
+    border-radius: 3vh;
+    border-style: none;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+.user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.username {
+    color: black;
+    font-family: 'poppins', sans-serif;
+    font-size: 5vh;
+}
+
+.remove-user-btn {
+    margin-right: 150vh;
+    background-color: rgb(255, 60, 0);
+    height: 10vh;
+    width: 50vh;
+    font-family: 'poppins', sans-serif;
+    border-radius: 5vh;
+    border-style: none;
+    font-size: 5vh;
 }

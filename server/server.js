@@ -83,6 +83,8 @@ const reloadChat = require('./routes/reload-chat');
 const addPerson = require('./routes/add-person');
 const loadGroups = require('./routes/load-groups');
 const leaveGroup = require('./routes/leave-group');
+const changeGroupName = require('./routes/change-group-name');
+const removeUser = require('./routes/remove-user');
 
 app.get('/', (req, res) => {
   res.send('Hello world');
@@ -129,5 +131,11 @@ app.use('/load-groups', loadGroups);
 
 //leaving group 
 app.use('/leave-group', leaveGroup);
+
+//changing group name
+app.use('/change-group-name', changeGroupName);
+
+//kicking / removing user out of the group
+app.use('/remove-user', removeUser);
 
 app.listen(4000);

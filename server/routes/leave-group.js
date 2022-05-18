@@ -1,3 +1,4 @@
+const { group } = require('console');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
@@ -5,26 +6,39 @@ var usersFile = require('../users.json');
 
 router.post('/', (req, res) => {
   const userIndex = req.body.userIndex;
-  const groupName = req.body.groupName;
   const username = req.body.username;
-  var group = require(`../groups/${groupName}.json`);
+  const groupName = req.body.groupName;
 
   //modifying users.json
-  usersFile.users[userIndex].groups.splice(groupName, 1);
+  var groupObjIndex = -1;
 
-  fs.writeFile('./users.json', JSON.stringify(usersFile), err => {
-    if(err) {
-      console.log(err);
-    }
+  for (let i = 0; i <= usersFile.users[userIndex].groups.length; i++) {
+    groupObjIndex++;
+
+    if (usersFile.users[userIndex].groups[i] == groupName) break;
+  }
+
+  usersFile.users[userIndex].groups.splice(groupObjIndex, 1);
+
+  fs.writeFile('./users.json', JSON.stringify(usersFile), (err) => {
+    if (err) console.log(err);
   });
 
-  //modifying the group file 
-  group.permittedUsers.splice(username, 1);
+  //modifying the group/chat file
+  var groupFile = require(`../groups/${groupName}.json`);
 
-  fs.writeFile(`./groups/${groupName}`, JSON.stringify(group), err => {
-    if(err) {
-      console.log(err);
-    }
+  var permittedUsersObjIndex = -1;
+
+  for (let i = 0; i <= groupFile.permittedUsers.length; i++) {
+    permittedUsersObjIndex++;
+
+    if (groupFile.permittedUsers[i] === username) break;
+  }
+
+  groupFile.permittedUsers.splice(permittedUsersObjIndex, 1);
+
+  fs.writeFile(`./groups/${groupName}.json`, JSON.stringify(groupFile), (err) => {
+    if (err) console.log(err);
   });
 
   res.end();

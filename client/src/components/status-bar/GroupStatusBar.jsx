@@ -36,13 +36,11 @@ function leaveGroup() {
   chatData.groups.splice(currentGroupData.groupName, 1);
 
   localStorage.setItem('chatData', JSON.stringify(chatData));
-
-  window.location.reload();
 }
 
 function renderSettings() {
   ReactDOM.render(
-    <Homepage frame={Settings()} />, document.getElementById('root')
+    <Homepage frame={<Settings />} />, document.getElementById('root')
   );
 }
 

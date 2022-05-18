@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import React from 'react';
 import Login from './components/login/Login.jsx';
 import Homepage from './components/homepage/Homepage.jsx'; import configFile from './config.json';
 import Logo from './components/homepage/Logo.js';

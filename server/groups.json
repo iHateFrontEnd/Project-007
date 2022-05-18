@@ -1,8 +1,1 @@
-{
-  "groups": [
-    "test-group",
-    "test-group-2",
-    "the-friends-group",
-    "how-you-like-me-now"
-  ]
-}
+{"groups":["test-group","/usr/tmp/group","another-one?"]}
