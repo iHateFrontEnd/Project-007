@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usersFile = require('../users.json');
+const configFile = require('../config.json');
 const fs = require('fs');
 
 router.post('/', (req, res) => {
@@ -8,7 +9,7 @@ router.post('/', (req, res) => {
     const userIndex = parseInt(req.body.userIndex);
 
     console.log(userIndex);
-    
+
     const username = req.body.username;
     const fUsername = req.body.fUsername;
 
@@ -46,6 +47,7 @@ router.post('/', (req, res) => {
             status: 'failed',
             reason: 'friend not found'
         });
+
     }
 
     res.end();

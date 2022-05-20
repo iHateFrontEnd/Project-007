@@ -4,21 +4,23 @@ const fs = require('fs');
 const app = express();
 const io = require('socket.io')(5000, {
   cors: {
-    origin: ['http://localhost:3000']
+    origin: ['http://192.168.0.168:3000']
   }
 });
-const configFile = require('./config.json');
+var configFile = require('./config.json');
 const usersFile = require('./users.json');
 app.use(express.json());
 app.use(
   cors({
-    origin: 'http://localhost:3000'
+    origin: 'http://192.168.0.168:3000'
   })
 );
 
 //websockets
 io.on('connection', socket => {
-  socket.on('send-msg', (msg, username, typedMsg, groupName) => {
+  //updating msg's for gorup chat
+  socket.on('send-msg-groups', (msg, username, typedMsg, groupName) => {
+
     console.log('connected');
     let group = require(`./groups/${groupName}.json`);
 
@@ -30,7 +32,37 @@ io.on('connection', socket => {
       }
     });
 
-    io.emit('recive-msg', group.chat);
+    io.emit('recive-msg-groups', group.chat);
+  });
+
+  //updating msg's for dm chat
+  socket.on('send-msg-dm', (msg, username, fUsername) => {
+    var dmFile;
+    var tryOrCatch;
+
+    try {
+      dmFile = require(`./personal/${username}&${fUsername}.json`);
+      tryOrCatch = 'try';
+    } catch (err) {
+      dmFile = require(`./personal/${fUsername}&${username}.json`);
+      tryOrCatch = 'catch';
+    }
+
+    dmFile.chat.push({
+      [username]: msg
+    });
+
+    if (tryOrCatch == 'try') {
+      fs.writeFile(`./personal/${username}&${fUsername}.json`, JSON.stringify(dmFile), (err) => {
+        if (err) console.log(err);
+      });
+    } else {
+      fs.writeFile(`./personal/${fUsername}&${username}.json`, JSON.stringify(dmFile), (err) => {
+        if (err) console.log(err);
+      });
+    }
+
+    io.emit('recive-msg-dm', dmFile.chat);
   });
 
   //accepting friend request 
@@ -64,7 +96,14 @@ io.on('connection', socket => {
       }
     });
 
-    io.emit('added-friend', username);
+    configFile.dmChatLayout.permittedUsers.push(toAcceptUser, username);
+
+    //creating the chat file 
+    fs.writeFile(`./personal/${username}&${toAcceptUser}.json`, JSON.stringify(configFile.dmChatLayout), (err) => {
+      if (err) console.log(err);
+    });
+
+    io.emit('added-friend', username, toAcceptUser);
   });
 });
 
@@ -85,6 +124,7 @@ const loadGroups = require('./routes/load-groups');
 const leaveGroup = require('./routes/leave-group');
 const changeGroupName = require('./routes/change-group-name');
 const removeUser = require('./routes/remove-user');
+const unFriendUser = require('./routes/un-friend-user');
 
 app.get('/', (req, res) => {
   res.send('Hello world');
@@ -138,4 +178,7 @@ app.use('/change-group-name', changeGroupName);
 //kicking / removing user out of the group
 app.use('/remove-user', removeUser);
 
-app.listen(4000);
+//unfriending a user
+app.use('/un-friend-user', unFriendUser);
+
+app.listen(process.env.PORT || 4000);

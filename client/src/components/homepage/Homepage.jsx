@@ -4,7 +4,7 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import AddFriend from '../add-friend/AddFriend';
 import JoinGroup from '../join-group/JoinGroup';
 import TopBar from '../top-bar/TopBar';
-import renderGroupChat from './renderGroupChat';
+import renderChat from '../../renderChat';
 import './Homepage.css';
 
 var groupsArr = [];
@@ -67,7 +67,7 @@ function chatButtonsForGroups(type) {
     for (let i = 0; i <= chatData.groups.length - 1; i++) {
       groupsArr.push(
         <p>
-          <button className="groups" onClick={() => renderGroupChat(i, 'network')} id={`group${i}`}>{chatData.groups[i]}</button>
+          <button className="groups" onClick={() => renderChat(i, 'network', 'groups')} id={`group${i}`}>{chatData.groups[i]}</button>
         </p>
       );
     }
@@ -92,7 +92,7 @@ function chatButtonsForFriends(type) {
     for (let i = 0; i <= chatData.friends.length - 1; i++) {
       friendsArr.push(
         <p>
-          <button className='friends' id={`friend${i}`}>{chatData.friends[i]}</button>
+          <button className='friends' onClick={() => { renderChat(i, 'network', 'dm') }} id={`friend${i}`}>{chatData.friends[i]}</button>
         </p>
       );
     }

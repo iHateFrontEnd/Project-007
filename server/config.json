@@ -9,5 +9,14 @@
         "incomingRequests": [],
         "sentRequest": []
     },
-    "groupChatLayout": {}
+    "groupChatLayout": {
+        "groupName": "",
+        "permittedUsers": [],
+        "requestedUsers": [],
+        "chat": []
+    },
+    "dmChatLayout": {
+        "permittedUsers": [],
+        "chat": []
+    }
 }

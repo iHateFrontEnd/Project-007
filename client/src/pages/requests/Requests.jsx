@@ -49,18 +49,24 @@ function acceptRequest(acceptedUsername) {
     }
 
     socket.emit('accept-request', req);
-
-    window.location.reload();
 }
 
-socket.on('added-friend', (friendsUsername) => {
-    if (user.username === friendsUsername) {
+socket.on('added-friend', (username, fUsername) => {
+    if (user.username === username) {
         var chatData = JSON.parse(localStorage.getItem('chatData'));
-        chatData.friends.push(friendsUsername);
+        chatData.friends.push(fUsername);
 
         localStorage.setItem('chatData', JSON.stringify(chatData));
 
         window.location.reload();
+    }
+
+    if (user.username === fUsername) {
+        var chatData = JSON.parse(localStorage.getItem('chatData'));
+        chatData.friends.push(username);
+
+        localStorage.setItem('chatData', JSON.stringify(chatData));
+
         window.location.reload();
     }
 });

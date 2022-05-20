@@ -17,8 +17,6 @@ async function loadGroups() {
     })
   }
 
-  console.log(configFile.serverURL);
-
   const res = await fetch(`${configFile.serverURL}/load-groups`, options);
   const data = await res.json();
 

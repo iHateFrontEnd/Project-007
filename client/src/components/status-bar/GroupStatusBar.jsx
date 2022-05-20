@@ -6,6 +6,8 @@ import Settings from '../group-chat/settings/Settings';
 import configFile from '../../config.json';
 import './StatusBar.css';
 
+const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+
 function addPeople() {
   ReactDOM.render(
     <Homepage frame={<AddPeople />} />, document.getElementById('root')
@@ -36,6 +38,8 @@ function leaveGroup() {
   chatData.groups.splice(currentGroupData.groupName, 1);
 
   localStorage.setItem('chatData', JSON.stringify(chatData));
+
+  window.location.reload();
 }
 
 function renderSettings() {
@@ -44,18 +48,18 @@ function renderSettings() {
   );
 }
 
-export default function GroupStatusBar() {
-  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+export default class GroupStatusBar extends React.Component {
+  render() {
+    return (
+      <div className='groupStatusBar'>
+        <h4>{currentGroupData.groupName}</h4>
 
-  return (
-    <div className='groupStatusBar'>
-      <h4>{currentGroupData.groupName}</h4>
+        <button className='statusBarBtns' onClick={addPeople}>Add people</button>
 
-      <button className='statusBarBtns' onClick={addPeople}>Add people</button>
+        <button className='statusBarBtns' onClick={leaveGroup}>Leave</button>
 
-      <button className='statusBarBtns' onClick={leaveGroup}>Leave</button>
-
-      <button className='statusBarBtns' onClick={renderSettings}>Settings</button>
-    </div>
-  );
+        <button className='statusBarBtns' onClick={renderSettings}>Settings</button>
+      </div>
+    );
+  }
 }

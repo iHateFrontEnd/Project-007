@@ -1,1 +1,5 @@
-{"groups":["test-group","/usr/tmp/group","another-one?"]}
+{
+  "groups": [
+    "another-one!?"
+  ]
+}
