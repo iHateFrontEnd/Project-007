@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const usersFile = require('../users.json');
+const usersFile = require('../../users.json');
 
 router.post('/', (req, res) => {
     const userIndex = req.body.userIndex;

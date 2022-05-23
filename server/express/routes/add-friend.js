@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const usersFile = require('../users.json');
-const configFile = require('../config.json');
+const usersFile = require('../../users.json');
+const configFile = require('../../config.json');
 const fs = require('fs');
 
 router.post('/', (req, res) => {
@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
         //wrirting to sentRequests
         usersFile.users[fUserIndex].incomingRequests.push(username);
 
-        fs.writeFile('./users.json', JSON.stringify(usersFile, null, 2), (err) => {
+        fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
             if (err) {
                 console.log(err);
             }

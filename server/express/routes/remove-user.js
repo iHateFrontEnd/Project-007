@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-var usersFile = require('../users.json');
+var usersFile = require('../../users.json');
 
 //this function changes the users.json
 function modifyUsersFile(username, groupName) {
@@ -25,14 +25,14 @@ function modifyUsersFile(username, groupName) {
 
     usersFile.users[userIndex].groups.splice(groupIndex, 1);
 
-    fs.writeFile(`./users.json`, JSON.stringify(usersFile), (err) => {
+    fs.writeFile(`../users.json`, JSON.stringify(usersFile), (err) => {
         if (err) console.log(err);
     });
 }
 
 //this function changes the main chat/group file
 function modifyGroupFile(groupName, username) {
-    var groupFile = require(`../groups/${groupName}.json`);
+    var groupFile = require(`../../groups/${groupName}.json`);
 
     //searching for group inside "groups" obj of the user
     var userIndex = -1;
@@ -45,7 +45,7 @@ function modifyGroupFile(groupName, username) {
 
     groupFile.permittedUsers.splice(userIndex, 1);
 
-    fs.writeFile(`./groups/${groupName}.json`, JSON.stringify(groupFile), (err) => {
+    fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(groupFile), (err) => {
         if (err) console.log(err);
     });
 }

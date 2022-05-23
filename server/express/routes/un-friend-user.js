@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-var usersFile = require('../users.json');
+var usersFile = require('../../users.json');
 
 router.post('/', (req, res) => {
     const userIndex = req.body.userIndex;
@@ -39,17 +39,17 @@ router.post('/', (req, res) => {
 
     usersFile.users[fUserIndex].friends.splice(friendsIndex, 1);
 
-    fs.writeFile('./users.json', JSON.stringify(usersFile), (err) => {
+    fs.writeFile('../users.json', JSON.stringify(usersFile), (err) => {
         if (err) console.log(err);
     });
 
     //deleting the chat file
     try {
-        fs.unlink(`./groups/${username}&${fUsername}.json`, (err) => {
+        fs.unlink(`../groups/${username}&${fUsername}.json`, (err) => {
             if (err) console.log(err);
         });
     } catch (err) {
-        fs.unlink(`./groups/${fUsername}&${username}.json`, (err) => {
+        fs.unlink(`../groups/${fUsername}&${username}.json`, (err) => {
             if (err) console.log(err);
         });
     }

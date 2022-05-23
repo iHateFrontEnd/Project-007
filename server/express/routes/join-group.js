@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const groupsFile = require('../groups.json');
+const groupsFile = require('../../groups.json');
 
 router.post('/', (req, res) => {
     const groupName = req.body.groupName;
@@ -21,12 +21,12 @@ router.post('/', (req, res) => {
     }
 
     if (groupFound == true) {
-        let group = require(`../groups/${groupName}.json`);
+        let group = require(`../../groups/${groupName}.json`);
         group.requestedUsers.push(username);
 
         console.log(group);
 
-        fs.writeFile(`./groups/${groupName}.json`, JSON.stringify(group, null, 2), (err) => {
+        fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(group, null, 2), (err) => {
             if (err) {
                 console.log(err)
             }

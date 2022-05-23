@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const usersFile = require('../users.json');
+const usersFile = require('../../users.json');
 
 router.post('/', (req, res) => {
     const username = req.body.username;
@@ -12,9 +12,6 @@ router.post('/', (req, res) => {
 
     for (let i = 0; i <= usersFile.users.length - 1; i++) {
         userIndex++;
-
-        console.log(usersFile.users[i]);
-
 
         if (usersFile.users[i].username === username && usersFile.users[i].password === password) {
             userFound = true;

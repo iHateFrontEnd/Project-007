@@ -5,7 +5,7 @@ router.post('/', (req, res) => {
     const groupName = req.body.groupName;
 
     if (req.body.toLoad == 'group') {
-        let groupFile = require(`../groups/${groupName}.json`);
+        let groupFile = require(`../../groups/${groupName}.json`);
 
         res.send({
             permittedUsers: groupFile.permittedUsers,
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
         const username = req.body.username;
 
         try {
-            var dmFile = require(`../personal/${fUsername}&${username}.json`);
+            var dmFile = require(`../../personal/${fUsername}&${username}.json`);
 
             res.send({
                 fUsername: fUsername,
@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
             });
         } catch (err) {
 
-            var dmFile = require(`../personal/${username}&${fUsername}.json`);
+            var dmFile = require(`../../personal/${username}&${fUsername}.json`);
 
             res.send({
                 fUsername: fUsername,

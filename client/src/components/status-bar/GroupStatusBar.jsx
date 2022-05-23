@@ -35,8 +35,17 @@ function leaveGroup() {
 
   //changing chatData in localStorage()
   var chatData = JSON.parse(localStorage.getItem('chatData'));
-  chatData.groups.splice(currentGroupData.groupName, 1);
 
+  //searching for groups index
+  var groupIndex = -1;
+
+  for (let i = 0; i <= chatData.groups.length; i++) {
+    groupIndex++;
+
+    if (chatData.groups[i] === currentGroupData.groupName) break;
+  }
+
+  chatData.groups.splice(groupIndex, 1);
   localStorage.setItem('chatData', JSON.stringify(chatData));
 
   window.location.reload();

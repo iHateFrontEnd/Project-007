@@ -1,0 +1,16 @@
+{
+  "name": "socketio-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "wss": "nodemon server.js"
+  },
+  "author": "Rushabh.R",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.5.0"
+  }
+}

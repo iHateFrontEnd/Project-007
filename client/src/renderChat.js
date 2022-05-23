@@ -63,6 +63,8 @@ export default async function renderChat(index, toUse, chatType) {
       const res = await fetch(`${configFile.serverURL}/load-chat-data`, options);
       const data = await res.json();
 
+      console.log(data);
+
       await localStorage.setItem('currentGroupData', JSON.stringify({
         requestedUsers: data.requestedUsers,
         permittedUsers: data.permittedUsers,

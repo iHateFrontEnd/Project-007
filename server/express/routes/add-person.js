@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-var usersFile = require('../users.json');
+var usersFile = require('../../users.json');
 
 router.post('/', (req, res) => {
   console.log('Hello world');
@@ -30,11 +30,11 @@ router.post('/', (req, res) => {
   }
 
   //writing to group file
-  var group = require(`../groups/${groupName}.json`);
+  var group = require(`../../groups/${groupName}.json`);
 
   group.permittedUsers.push(toAddPerson);
 
-  fs.writeFile(`./groups/${groupName}.json`, JSON.stringify(group), (err) => {
+  fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(group), (err) => {
     if (err) {
       console.log(err);
     }
@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
   //updating users.json
   usersFile.users[userIndex].groups.push(groupName);
 
-  fs.writeFile('./users.json', JSON.stringify(usersFile), (err) => {
+  fs.writeFile('../users.json', JSON.stringify(usersFile), (err) => {
     if (err) {
       console.log(err)
     }

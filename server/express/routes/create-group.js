@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const groupsFile = require('../groups.json');
-const usersFile = require('../users.json');
-var configFile = require('../config.json');
+const groupsFile = require('../../groups.json');
+const usersFile = require('../../users.json');
+var configFile = require('../../config.json');
 const fs = require('fs');
 
 router.post('/', (req, res) => {
@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
     //for groups.json
     groupsFile.groups.push(groupName);
 
-    fs.writeFile('./groups.json', JSON.stringify(groupsFile, null, 2), (err) => {
+    fs.writeFile('../groups.json', JSON.stringify(groupsFile, null, 2), (err) => {
         if (err) {
             console.log(err);
         }
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
     //for users.json
     usersFile.users[userIndex].groups.push(groupName);
 
-    fs.writeFile('./users.json', JSON.stringify(usersFile, null, 2), (err) => {
+    fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
         if (err) {
             console.log(err);
         }
@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
     //saving the group file 
     configFile.groupChatLayout.groupName = groupName;
 
-    fs.writeFile(`./groups/${groupName}.json`, JSON.stringify(configFile.groupChatLayout, null, 2), (err) => {
+    fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(configFile.groupChatLayout, null, 2), (err) => {
         if (err) {
             console.log(err);
         }

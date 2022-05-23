@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
+var usersFile = require('../../users.json');
 const fs = require('fs');
-var usersFile = require('../users.json');
 
 router.post('/', (req, res) => {
-    const username = req.body.username;
+    const password = req.body.password;
     const userIndex = req.body.userIndex;
 
-    usersFile.users[userIndex].username = username;
+    usersFile.users[userIndex].password = password;
 
-    fs.writeFile('./users.json', JSON.stringify(usersFile, null, 2), (err) => {
+    fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
         if (err) {
             console.log(err);
         }

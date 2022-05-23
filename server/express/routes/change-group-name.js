@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-var groupsFile = require('../groups.json');
-var usersFile = require('../users.json');
+var groupsFile = require('../../groups.json');
+var usersFile = require('../../users.json');
 
 router.post('/', (req, res) => {
     try {
@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
     groupsFile.groups.splice(groupIndex, 1);
     groupsFile.groups.push(newGroupName);
 
-    fs.writeFile('./groups.json', JSON.stringify(groupsFile), (err) => {
+    fs.writeFile('../groups.json', JSON.stringify(groupsFile), (err) => {
         if (err) console.log(err);
     });
 
@@ -46,21 +46,21 @@ router.post('/', (req, res) => {
     usersFile.users[userIndex].groups.splice(groupIndex, 1);
     usersFile.users[userIndex].groups.push(newGroupName);
 
-    fs.writeFile('./users.json', JSON.stringify(usersFile), (err) => {
+    fs.writeFile('../users.json', JSON.stringify(usersFile), (err) => {
         if (err) console.log(err);
     });
 
     //modifying the main group/chat file
-    var groupFile = require(`../groups/${groupName}.json`);
+    var groupFile = require(`../../groups/${groupName}.json`);
 
     groupFile.groupName = newGroupName;
 
-    fs.writeFile(`./groups/${groupName}.json`, JSON.stringify(groupFile), (err) => {
+    fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(groupFile), (err) => {
         if (err) console.log(err);
     });
 
     //renaming the main groups/chat file
-    fs.rename(`./groups/${groupName}.json`, `./groups/${newGroupName}.json`, (err) => {
+    fs.rename(`../groups/${groupName}.json`, `./groups/${newGroupName}.json`, (err) => {
         if (err) console.log(err);
     });
 
