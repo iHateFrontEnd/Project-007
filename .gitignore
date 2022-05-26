@@ -1,7 +1,6 @@
 /client/node_modules
 /server/express/node_modules
 /server/socketio/node_modules
-/python-server
-/server/groups/*
-/server/personal/*
-
+/start-app/node_modules
+.gitignore-project
+.git-project/

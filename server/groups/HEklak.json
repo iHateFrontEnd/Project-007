@@ -1,0 +1,12 @@
+{
+  "groupName": "HEklak",
+  "permittedUsers": [
+    "rushabh"
+  ],
+  "requestedUsers": [],
+  "chat": [
+    {
+      "rushabh": "Hello world"
+    }
+  ]
+}
