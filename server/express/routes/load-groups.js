@@ -5,7 +5,9 @@ const usersFile = require('../../users.json');
 router.post('/', (req, res) => {
   const userIndex = req.body.userIndex;
 
-  res.send(usersFile.users[userIndex]);
+  const toSend = usersFile.users[userIndex];
+
+  res.json(toSend);
 
   res.end();
 });

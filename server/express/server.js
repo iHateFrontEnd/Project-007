@@ -79,4 +79,4 @@ app.use('/remove-user', removeUser);
 //unfriending a user
 app.use('/un-friend-user', unFriendUser);
 
-app.listen(process.env.PORT || 4000);
+app.listen(process.env.PORT || 4000, () => console.log('express server'));

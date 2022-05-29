@@ -9,9 +9,7 @@ import './Requests.css';
 
 var friendRequestsArr = [];
 
-
 const user = JSON.parse(localStorage.getItem('user'));
-var chatData = JSON.parse(localStorage.getItem('chatData'));
 
 class Requests extends React.Component {
     render() {
@@ -43,25 +41,19 @@ function acceptRequest(acceptedUsername) {
 
     localStorage.setItem('chatData', JSON.stringify(chatData))
 
-    const req = {
+    socket.emit('accept-request', {
         toAcceptUser: acceptedUsername,
         userIndex: user.userIndex
-    }
+    });
 
-    socket.emit('accept-request', req);
+    window.location.reload();
 }
 
 socket.on('added-friend', (username, fUsername) => {
-    if (user.username === username) {
-        var chatData = JSON.parse(localStorage.getItem('chatData'));
-        chatData.friends.push(fUsername);
-
-        localStorage.setItem('chatData', JSON.stringify(chatData));
-
-        window.location.reload();
-    }
+    console.log('helo')
 
     if (user.username === fUsername) {
+        console.log('fusername')
         var chatData = JSON.parse(localStorage.getItem('chatData'));
         chatData.friends.push(username);
 

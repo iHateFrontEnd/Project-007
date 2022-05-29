@@ -1,26 +1,33 @@
 const express = require('express');
 const router = express.Router();
-var configFile = require('../../config.json');
 var usersFile = require('../../users.json');
-const fs = require('fs');
 
 router.post('/', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    var userLayout = configFile.userLayout;
+    const userData = {
+        username: username,
+        password: password,
+        friends: [],
+        groups: [],
+        incomingRequests: [],
+        sentRequest: []
+    }
 
-    userLayout.username = username;
-    userLayout.password = password;
+    usersFile.users.push(userData);
 
-    usersFile.users.push(userLayout);
 
+    /*
     fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
         if (err) {
             console.log(err);
         }
     });
     res.end();
+    */
+
+    res.send(userData)
 });
 
 module.exports = router;

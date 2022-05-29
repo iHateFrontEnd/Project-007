@@ -2,7 +2,7 @@ const configFile = require('../config.json');
 const io = require('socket.io')(5000, {
     cors: {
         origin: 'http://192.168.1.168:3000'
-    }
+    },
 });
 const fs = require('fs');
 var usersFile = require('../users.json');
@@ -66,7 +66,7 @@ io.on('connection', socket => {
         const username = usersFile.users[userIndex].username;
 
         //finding toAcceptUserIndex
-        for (let i = 0; i <= usersFile.users.length; i++) {
+        for (let i = 0; i <= usersFile.users.length - 1; i++) {
             toAcceptUserIndex++;
 
             if (usersFile.users[i].username == toAcceptUser) {
@@ -74,11 +74,23 @@ io.on('connection', socket => {
             }
         }
 
-        usersFile.users[userIndex].incomingRequests.splice(toAcceptUser, 1);
-        usersFile.users[userIndex].friends.push(toAcceptUser);
+        //for the user who accepted the request
+        for (let i = 0; i <= usersFile.users[userIndex].incomingRequests.length; i++) {
+            if (usersFile.users[userIndex].incomingRequests[i] == toAcceptUser) {
+                usersFile.users[userIndex].incomingRequests.splice(toAcceptUser, 1);
+                usersFile.users[userIndex].friends.push(toAcceptUser);
+                break;
+            }
+        }
 
-        usersFile.users[toAcceptUserIndex].sentRequest.splice(username, 1);
-        usersFile.users[toAcceptUserIndex].friends.push(username);
+        //for the user who sent the request
+        for (let i = 0; i <= usersFile.users[userIndex].sentRequest.length; i++) {
+            if (usersFile.users[toAcceptUserIndex].sentRequest[i] == username) {
+                usersFile.users[toAcceptUserIndex].sentRequest.splice(username, 1);
+                usersFile.users[toAcceptUserIndex].friends.push(username);
+                break;
+            }
+        }
 
         fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
             if (err) {
@@ -93,6 +105,7 @@ io.on('connection', socket => {
             if (err) console.log(err);
         });
 
-        io.emit('added-friend', username, toAcceptUser);
+        socket.broadcast.emit('added-friend', username, toAcceptUser);
+
     });
 });

@@ -7,6 +7,30 @@
       "groups": [],
       "incomingRequests": [],
       "sentRequest": []
+    },
+    {
+      "username": "rama",
+      "password": "1971",
+      "friends": [],
+      "groups": [],
+      "incomingRequests": [],
+      "sentRequest": []
+    },
+    {
+      "friends": [],
+      "groups": [],
+      "incomingRequests": [],
+      "sentRequest": [
+        "rushabh"
+      ]
+    },
+    {
+      "friends": [
+        "rushabh"
+      ],
+      "groups": [],
+      "incomingRequests": [],
+      "sentRequest": []
     }
   ]
 }

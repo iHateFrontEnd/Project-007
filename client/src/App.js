@@ -20,6 +20,8 @@ async function loadGroups() {
   const res = await fetch(`${configFile.serverURL}/load-groups`, options);
   const data = await res.json();
 
+  console.log(data);
+
   localStorage.setItem('chatData', JSON.stringify({
     groups: data.groups,
     friends: data.friends
