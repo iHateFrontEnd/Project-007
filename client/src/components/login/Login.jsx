@@ -51,6 +51,8 @@ async function login() {
     ReactDOM.render(
       <Homepage frame={Logo} />, document.getElementById('root')
     );
+
+    window.location.reload()
   } else {
     alert('Incorrect username or password, please try again');
   }
@@ -62,7 +64,6 @@ function renderSignUp() {
     <SignUp />, document.getElementById('root')
   );
 }
-
 
 class Login extends React.Component {
   render() {

@@ -3,24 +3,8 @@
     {
       "username": "rushabh",
       "password": "000",
-      "friends": [
-        "chrome"
-      ],
-      "groups": [
-        "HEklak"
-      ],
-      "incomingRequests": [],
-      "sentRequest": []
-    },
-    {
-      "username": "chrome",
-      "password": "000",
-      "friends": [
-        "rushabh"
-      ],
-      "groups": [
-        "another-one!?"
-      ],
+      "friends": [],
+      "groups": [],
       "incomingRequests": [],
       "sentRequest": []
     }

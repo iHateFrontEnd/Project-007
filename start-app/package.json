@@ -7,7 +7,8 @@
     "server": "cd ../server/express && npm start",
     "wss": "cd ../server/socketio && npm start",
     "start-app": "nodemon server.js",
-    "start": "concurrently \"npm run wss\" \"npm run server\" \"npm run start-app\""
+    "client": "cd ../client && npm start",
+    "start": "concurrently \"npm run wss\" \"npm run server\" \"npm run start-app\" \"npm run client\""
   },
   "author": "Rushabh.R",
   "license": "ISC",
