@@ -1,50 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import configFile from './config.json';
-import Homepage from './components/homepage/Homepage';
-import DmChat from './components/dm-chat/DmChat';
-import GroupChat from './components/group-chat/GroupChat';
+import trimMsg from './trimMsg';
 
-function trimMsg(data, chatType) {
-  var stringMsg = JSON.stringify(data);
-
-  var trimedMsg = stringMsg.replaceAll('"', '');
-  trimedMsg = trimedMsg.replaceAll('[', '');
-  trimedMsg = trimedMsg.replaceAll(']', '');
-  trimedMsg = trimedMsg.replaceAll('{', '');
-  trimedMsg = trimedMsg.replaceAll(':', ' : ');
-
-  var msgArr = [];
-  var rawMsg = [];
-
-  rawMsg.push(trimedMsg.split('},'));
-
-  //removing } (this is the last charecter of all the msg's)
-  rawMsg[0][rawMsg[0].length - 1] = rawMsg[0][rawMsg[0].length - 1].slice(0, -1) + '';
-
-  if (chatType === 'groups') sessionStorage.setItem('rawMsg', stringMsg);
-  else if (chatType === 'dm') sessionStorage.setItem('dmRawMsg', stringMsg);
-
-  for (let i = 0; i <= rawMsg[0].length; i++) {
-    msgArr.push(
-      <p key={i}>
-        {rawMsg[0][i]}
-      </p>
-    );
-  }
-
-  if (chatType === 'groups') {
-    ReactDOM.render(
-      <Homepage frame={<GroupChat chat={msgArr} />} />, document.getElementById('root')
-    );
-  } else if (chatType === 'dm') {
-    ReactDOM.render(
-      <Homepage frame={<DmChat chat={msgArr} />} />, document.getElementById('root')
-    );
-  }
-}
-
-export default async function renderChat(index, toUse, chatType) {
+export default async function renderChat(index, toUse, chatType, setChat) {
   const renderGroupChat = () => {
     const toUseNetwork = async () => {
       const chatData = JSON.parse(localStorage.getItem('chatData'));
@@ -63,22 +20,20 @@ export default async function renderChat(index, toUse, chatType) {
       const res = await fetch(`${configFile.serverURL}/load-chat-data`, options);
       const data = await res.json();
 
-      console.log(data);
-
       await localStorage.setItem('currentGroupData', JSON.stringify({
         requestedUsers: data.requestedUsers,
         permittedUsers: data.permittedUsers,
         groupName: data.groupName
       }));
 
-      trimMsg(data.chat, 'groups');
+      trimMsg(data.chat, 'groups', null, toUse);
     }
 
     if (toUse === 'network') toUseNetwork();
     else if (toUse === 'storage') {
       const rawMsg = JSON.parse(sessionStorage.getItem('rawMsg'));
 
-      trimMsg(rawMsg, 'groups');
+      trimMsg(rawMsg, 'groups', setChat, toUse);
     }
   }
 
@@ -94,7 +49,7 @@ export default async function renderChat(index, toUse, chatType) {
         },
         body: JSON.stringify({
           toLoad: 'dm',
-          username: user.username,
+          userIndex: user.userIndex,
           fUsername: chatData.friends[index]
         })
       }
@@ -103,17 +58,17 @@ export default async function renderChat(index, toUse, chatType) {
       const data = await res.json();
 
       localStorage.setItem('currentDmData', JSON.stringify({
-        chattingWith: data.fUsername
+        chattingWith: chatData.friends[index]
       }));
 
-      trimMsg(data.chat, 'dm');
+      trimMsg(data.chat, 'dm', null);
     }
 
     if (toUse === 'network') toUseNetwork();
     else if (toUse === 'storage') {
       const dmRawMsg = JSON.parse(sessionStorage.getItem('dmRawMsg'));
 
-      trimMsg(dmRawMsg, 'dm');
+      trimMsg(dmRawMsg, 'dm', setChat);
     }
   }
 

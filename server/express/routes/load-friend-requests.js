@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const usersFile = require('../../users.json');
 
 router.post('/', (req, res) => {
-    const userIndex = req.body.userIndex;
+    fs.readFile('../users.json', 'utf-8', (err, data) => {
+        const usersFile = JSON.parse(data);
 
-    const requests = usersFile.users[userIndex].incomingRequests;
+        const userIndex = req.body.userIndex;
 
-    res.json({
-        requests: requests
-    });
+        const requests = usersFile.users[userIndex].incomingRequests;
 
-    res.end();
+        res.json({
+            requests: requests
+        });
+    })
 });
 
 module.exports = router;

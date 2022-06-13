@@ -1,13 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
 const app = express();
-app.use(express.json());
 app.use(
   cors({
-    origin: 'http://192.168.1.168:3000'
+    origin: 'http://localhost:3000'
   })
 );
+app.use(express.json());
 
 //importing routes
 const loginRoute = require('./routes/login');
@@ -28,7 +27,7 @@ const removeUser = require('./routes/remove-user');
 const unFriendUser = require('./routes/un-friend-user');
 
 app.get('/', (req, res) => {
-  res.send('Hello world');
+  res.json('Hello world');
 });
 
 //loggin in a user

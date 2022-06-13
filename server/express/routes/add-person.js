@@ -4,7 +4,6 @@ const fs = require('fs');
 var usersFile = require('../../users.json');
 
 router.post('/', (req, res) => {
-  console.log('Hello world');
   const toAddPerson = req.body.toAdd;
   const groupName = req.body.groupName;
 

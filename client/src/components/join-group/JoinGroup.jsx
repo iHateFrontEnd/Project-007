@@ -30,7 +30,6 @@ async function requestToJoin() {
     } else {
       alert(`Group ${groupName} is not found, please try again with a proper group name`);
 
-      console.log(data);
     }
   } else {
     alert('Please enter a proper group name');

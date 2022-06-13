@@ -37,22 +37,10 @@ function renderChatData() {
   } catch (err) {
     console.log(err);
 
-    catchCounter++;
-
     if (catchCounter === 3) {
-      renderChatData()
+      renderChatData();
     }
-
-    console.log(catchCounter);
   }
-}
-
-//this try catch block is used to scroll to the bottom of the chat div
-try {
-  var chatDiv = document.getElementById('root')
-  chatDiv.scrollTop = chatDiv.scrollHeight;
-} catch (err) {
-  console.log(err);
 }
 
 renderChatData();
@@ -67,7 +55,7 @@ function chatButtonsForGroups(type) {
     for (let i = 0; i <= chatData.groups.length - 1; i++) {
       groupsArr.push(
         <p>
-          <button className="groups" onClick={() => renderChat(i, 'network', 'groups')} id={`group${i}`}>{chatData.groups[i]}</button>
+          <button className="groups" onClick={() => renderChat(i, 'network', 'groups', null)} id={`group${i}`}>{chatData.groups[i]}</button>
         </p>
       );
     }
@@ -92,9 +80,8 @@ function chatButtonsForFriends(type) {
     for (let i = 0; i <= chatData.friends.length - 1; i++) {
       friendsArr.push(
         <p>
-          <button className='friends' onClick={() => { renderChat(i, 'network', 'dm') }} id={`friend${i}`}>{chatData.friends[i]}</button>
-        </p>
-      );
+          <button className='friends' onClick={() => { renderChat(i, 'network', 'dm', null) }} id={`friend${i}`}>{chatData.friends[i]}</button>
+        </p>);
     }
 
     friendsArr.push(

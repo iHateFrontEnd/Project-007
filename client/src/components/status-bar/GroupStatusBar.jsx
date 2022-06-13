@@ -14,7 +14,7 @@ function addPeople() {
   );
 }
 
-function leaveGroup() {
+async function leaveGroup() {
   const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -31,22 +31,10 @@ function leaveGroup() {
     })
   }
 
-  fetch(`${configFile.serverURL}/leave-group`, options);
+  const res = await fetch(`${configFile.serverURL}/leave-group`, options);
+  const data = await res.json();
 
-  //changing chatData in localStorage()
-  var chatData = JSON.parse(localStorage.getItem('chatData'));
-
-  //searching for groups index
-  var groupIndex = -1;
-
-  for (let i = 0; i <= chatData.groups.length; i++) {
-    groupIndex++;
-
-    if (chatData.groups[i] === currentGroupData.groupName) break;
-  }
-
-  chatData.groups.splice(groupIndex, 1);
-  localStorage.setItem('chatData', JSON.stringify(chatData));
+  localStorage.setItem('chatData', JSON.stringify(data));
 
   window.location.reload();
 }
@@ -61,7 +49,7 @@ export default class GroupStatusBar extends React.Component {
   render() {
     return (
       <div className='groupStatusBar'>
-        <h4>{currentGroupData.groupName}</h4>
+        <h4>{this.props.groupName}</h4>
 
         <button className='statusBarBtns' onClick={addPeople}>Add people</button>
 

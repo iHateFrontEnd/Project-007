@@ -7,9 +7,6 @@ const fs = require('fs');
 router.post('/', (req, res) => {
     //f refers to friend        
     const userIndex = parseInt(req.body.userIndex);
-
-    console.log(userIndex);
-
     const username = req.body.username;
     const fUsername = req.body.fUsername;
 
@@ -28,7 +25,7 @@ router.post('/', (req, res) => {
 
     if (fUserFound == true) {
         res.json({
-            status: 'success',
+            status: 'success'
         });
 
         //writing to incoming requests

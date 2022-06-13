@@ -41,19 +41,13 @@ function acceptRequest(acceptedUsername) {
 
     localStorage.setItem('chatData', JSON.stringify(chatData))
 
-    socket.emit('accept-request', {
-        toAcceptUser: acceptedUsername,
-        userIndex: user.userIndex
-    });
+    socket.emit('accept-request', acceptedUsername, user.userIndex, user.username);
 
     window.location.reload();
 }
 
 socket.on('added-friend', (username, fUsername) => {
-    console.log('helo')
-
     if (user.username === fUsername) {
-        console.log('fusername')
         var chatData = JSON.parse(localStorage.getItem('chatData'));
         chatData.friends.push(username);
 

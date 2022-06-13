@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const router = express.Router();
 var usersFile = require('../../users.json');
 
@@ -17,17 +18,13 @@ router.post('/', (req, res) => {
 
     usersFile.users.push(userData);
 
-
-    /*
     fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
         if (err) {
             console.log(err);
         }
     });
-    res.end();
-    */
 
-    res.send(userData)
+    res.end();
 });
 
 module.exports = router;

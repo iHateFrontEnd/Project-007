@@ -44,7 +44,7 @@ export default class DmChatStatusBar extends React.Component {
   render() {
     return (
       <div className='dm-status-bar'>
-        <h4>Chatting with: {currentDmData.chattingWith}</h4>
+        <h4>Chatting with: {this.props.fUsername}</h4>
 
         <button className='statusBarBtns' onClick={unFriend}>un-friend</button>
       </div>

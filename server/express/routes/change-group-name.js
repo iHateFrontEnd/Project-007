@@ -12,7 +12,6 @@ router.post('/', (req, res) => {
         //pass
     }
 
-    console.log(req.body);
 
     const newGroupName = req.body.newGroupName;
     const groupName = req.body.groupName;

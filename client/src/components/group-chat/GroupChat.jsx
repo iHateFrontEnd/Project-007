@@ -1,29 +1,34 @@
-import React from 'react';
-import StatusBar from '../status-bar/GroupStatusBar';
+import React, { useState } from 'react';
 import renderChat from '../../renderChat';
+import GroupStatusBar from '../status-bar/GroupStatusBar';
 import { io } from 'socket.io-client';
 import configFile from '../../config.json';
 import './GroupChat.css';
 
-function sendMsg() {
-  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
-  const user = JSON.parse(localStorage.getItem('user'));
+const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+const user = JSON.parse(localStorage.getItem('user'));
+const chatData = JSON.parse(localStorage.getItem('chatData'));
+
+function sendMsg(setChat, socket) {
   var typedMsg = document.getElementById('msg').value;
   const msg = JSON.parse(sessionStorage.getItem('rawMsg'));
 
-  const socket = io(configFile.websocketServerURL);
-
   socket.emit('send-msg-groups', msg, user.username, typedMsg, currentGroupData.groupName, 'groups');
 
+  updateChat(setChat, socket);
+
+  //clearing the msg input
+  document.getElementById('msg').value = '';
+}
+
+function updateChat(setChat, socket) {
   //updating the messages
   socket.on('recive-msg-groups', (msg) => {
     sessionStorage.setItem('rawMsg', JSON.stringify(msg));
 
-    const chatData = JSON.parse(localStorage.getItem('chatData'));
-
     for (let i = 0; i <= chatData.groups.length; i++) {
       if (chatData.groups[i] === currentGroupData.groupName) {
-        renderChat(i, 'storage', 'groups');
+        renderChat(i, 'storage', 'groups', setChat);
         break;
       }
     }
@@ -32,27 +37,29 @@ function sendMsg() {
     var chatDiv = document.getElementById('chat');
     chatDiv.scrollTop = chatDiv.scrollHeight;
   });
-
-  //clearing the msg input
-  document.getElementById('msg').value = '';
 }
 
-export default class GroupChat extends React.Component {
-  render() {
-    return (
-      <div className='groupChat' id='groupChat'>
-        <StatusBar />
+export default function GroupChat(props) {
+  const [chat, setChat] = useState(props.chat);
 
-        <div className="chat" id='chat'>
-          {this.props.chat}
-        </div>
+  const socket = io(configFile.websocketServerURL);
 
-        <div className="enterMsg">
-          <input placeholder='Type a message' type="text" id="msg" className="msg" />
+  updateChat(setChat, socket);
 
-          <button onClick={sendMsg} className='sendMsg'>Send</button>
-        </div>
+  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+  return (
+    <div className='groupChat' id='groupChat'>
+      <GroupStatusBar groupName={currentGroupData.groupName} />
+
+      <div className="chat" id='chat'>
+        {chat}
       </div>
-    );
-  }
+
+      <div className="enterMsg">
+        <input placeholder='Type a message' type="text" id="msg" className="msg" />
+
+        <button onClick={() => { sendMsg(setChat, socket) }} className='sendMsg'>Send</button>
+      </div>
+    </div>
+  );
 }

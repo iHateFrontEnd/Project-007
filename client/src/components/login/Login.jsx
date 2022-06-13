@@ -30,17 +30,12 @@ async function login() {
   const userData = await res.json();
 
   if (userData.status != 'failed') {
-    //saving user data to local storage
-    console.log('saving user data');
-
     localStorage.setItem('user', JSON.stringify({
       username: username,
       password: password,
       isLoggedIn: true,
       userIndex: userData.userIndex,
     }));
-
-    console.log('saving chat data');
 
     //saving chat data to local storage 
     await localStorage.setItem('chatData', JSON.stringify({
@@ -52,7 +47,7 @@ async function login() {
       <Homepage frame={Logo} />, document.getElementById('root')
     );
 
-    window.location.reload()
+    window.location.reload();
   } else {
     alert('Incorrect username or password, please try again');
   }

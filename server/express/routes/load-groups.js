@@ -1,15 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const usersFile = require('../../users.json');
+const fs = require('fs');
 
 router.post('/', (req, res) => {
-  const userIndex = req.body.userIndex;
+  fs.readFile('../users.json', 'utf-8', (err, data) => {
+    const usersFile = JSON.parse(data);
 
-  const toSend = usersFile.users[userIndex];
 
-  res.json(toSend);
+    const userIndex = req.body.userIndex;
 
-  res.end();
+    var friendArr = [];
+
+    for (let i = 0; i <= usersFile.users[userIndex].friends.length - 1; i++) {
+      friendArr.push(usersFile.users[userIndex].friends[i].username);
+    }
+
+    console.log(friendArr);
+
+    res.json(
+      {
+        friends: friendArr,
+        groups: usersFile.users[userIndex].groups
+      }
+    );
+
+  })
 });
 
 module.exports = router;

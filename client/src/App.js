@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Login from './components/login/Login.jsx';
 import Homepage from './components/homepage/Homepage.jsx'; import configFile from './config.json';
 import Logo from './components/homepage/Logo.js';
@@ -20,8 +20,6 @@ async function loadGroups() {
   const res = await fetch(`${configFile.serverURL}/load-groups`, options);
   const data = await res.json();
 
-  console.log(data);
-
   localStorage.setItem('chatData', JSON.stringify({
     groups: data.groups,
     friends: data.friends
@@ -29,6 +27,7 @@ async function loadGroups() {
 }
 
 function App() {
+
   try {
     const user = JSON.parse(localStorage.getItem('user'));
 

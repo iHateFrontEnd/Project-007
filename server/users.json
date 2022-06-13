@@ -3,30 +3,24 @@
     {
       "username": "rushabh",
       "password": "000",
-      "friends": [],
-      "groups": [],
-      "incomingRequests": [],
-      "sentRequest": []
-    },
-    {
-      "username": "rama",
-      "password": "1971",
-      "friends": [],
-      "groups": [],
-      "incomingRequests": [],
-      "sentRequest": []
-    },
-    {
-      "friends": [],
-      "groups": [],
-      "incomingRequests": [],
-      "sentRequest": [
-        "rushabh"
-      ]
-    },
-    {
       "friends": [
-        "rushabh"
+        {
+          "username": "fox",
+          "chatFile": "rushabh&fox.json"
+        }
+      ],
+      "groups": [],
+      "incomingRequests": [],
+      "sentRequest": []
+    },
+    {
+      "username": "fox",
+      "password": "---",
+      "friends": [
+        {
+          "username": "rushabh",
+          "chatFile": "rushabh&fox.json"
+        }
       ],
       "groups": [],
       "incomingRequests": [],

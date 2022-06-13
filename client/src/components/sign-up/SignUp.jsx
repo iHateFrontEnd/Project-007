@@ -32,10 +32,6 @@ function signUp() {
   }
 }
 
-const loginURL = `${configFile.serverURL}/login`;
-
-console.log(loginURL);
-
 class SignUp extends React.Component {
   render() {
     return (

@@ -9,38 +9,45 @@ router.post('/', (req, res) => {
   const groupName = req.body.groupName;
 
   //modifying users.json
-  var groupObjIndex = -1;
+  for(let i = 0; i <= usersFile.users[userIndex].groups.length; i++) {
+    //removing the group from the groups arr 
+    if(usersFile.users[userIndex].groups[i] == groupName) {
+      usersFile.users[userIndex].groups.splice(i, 1); 
+      break;
+    }
+  } 
 
-  for (let i = 0; i <= usersFile.users[userIndex].groups.length; i++) {
-    groupObjIndex++;
-
-    if (usersFile.users[userIndex].groups[i] == groupName) break;
-  }
-
-  usersFile.users[userIndex].groups.splice(groupObjIndex, 1);
-
-  fs.writeFile('../users.json', JSON.stringify(usersFile), (err) => {
-    if (err) console.log(err);
+  fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
+    if(err) console.log(err);;
   });
 
-  //modifying the group/chat file
+  //modifying the chat/group file
   var groupFile = require(`../../groups/${groupName}.json`);
 
-  var permittedUsersObjIndex = -1;
-
-  for (let i = 0; i <= groupFile.permittedUsers.length; i++) {
-    permittedUsersObjIndex++;
-
-    if (groupFile.permittedUsers[i] === username) break;
+  //searching for users's username in permittedUsers arr 
+  for(let i = 0; i <= groupFile.permittedUsers.length; i++) {
+    if(groupFile.permittedUsers[i] == username) {
+      groupFile.permittedUsers.splice(i, 1);
+      break;
+    }
   }
 
-  groupFile.permittedUsers.splice(permittedUsersObjIndex, 1);
-
-  fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(groupFile), (err) => {
-    if (err) console.log(err);
+  fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(groupFile, null, 2), (err) => {
+    if(err) console.log(err);
   });
 
-  res.end();
+  var friendArr = [];
+
+  for (let i = 0; i <= usersFile.users[userIndex].friends.length - 1; i++) {
+    friendArr.push(usersFile.users[userIndex].friends[i].username);
+  }
+
+  res.json(
+    {
+      friends: friendArr,
+      groups: usersFile.users[userIndex].groups
+    }
+  );
 });
 
 module.exports = router;

@@ -35,10 +35,7 @@ async function sendFriendRequest() {
     } else {
       alert(`Try again with a proper username, user ${friendsUsername} does not exits :(`);
     }
-
-    console.log(data);
   }
-
 }
 
 const AddFriend = (
