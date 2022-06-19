@@ -5,6 +5,8 @@ import GroupChat from './components/group-chat/GroupChat';
 import DmChat from './components/dm-chat/DmChat';
 
 export default function trimMsg(data, chatType, setChat) {
+  console.log(data)
+
   var stringMsg = JSON.stringify(data);
 
   var trimedMsg = stringMsg.replaceAll('"', '');
@@ -38,7 +40,7 @@ export default function trimMsg(data, chatType, setChat) {
         <Homepage frame={<DmChat chat={msgArr} />} />, document.getElementById('root')
       );
     } else {
-      setChat(msgArr);
+      setChat(<p>Hello world</p>);
     }
   } else {
     if (setChat === null) {

@@ -13,5 +13,3 @@ echo "\n EVERYTHING IS INSTALLED, STARTING APP"
 cd ..
 chmod +x ./start-app.sh
 ./start-app.sh
-
-

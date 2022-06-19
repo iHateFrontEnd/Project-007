@@ -33,6 +33,7 @@ export default async function renderChat(index, toUse, chatType, setChat) {
     else if (toUse === 'storage') {
       const rawMsg = JSON.parse(sessionStorage.getItem('rawMsg'));
 
+
       trimMsg(rawMsg, 'groups', setChat, toUse);
     }
   }
@@ -60,6 +61,8 @@ export default async function renderChat(index, toUse, chatType, setChat) {
       localStorage.setItem('currentDmData', JSON.stringify({
         chattingWith: chatData.friends[index]
       }));
+
+      console.log(data.chat);
 
       trimMsg(data.chat, 'dm', null);
     }

@@ -42,11 +42,12 @@ function updateChat(setChat, socket) {
 export default function GroupChat(props) {
   const [chat, setChat] = useState(props.chat);
 
+  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+
   const socket = io(configFile.websocketServerURL);
 
   updateChat(setChat, socket);
 
-  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
   return (
     <div className='groupChat' id='groupChat'>
       <GroupStatusBar groupName={currentGroupData.groupName} />

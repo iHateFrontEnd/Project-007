@@ -5,7 +5,9 @@ const fs = require('fs');
 function unFriendUser(userIndex, index, usersFile) {
     usersFile.users[userIndex].friends.splice(index, 1);
 
-    fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
+    console.log(usersFile);
+
+    fs.writeFile('../users.json', JSON.stringify(usersFile), (err) => {
         if (err) console.log(err);
     });
 }

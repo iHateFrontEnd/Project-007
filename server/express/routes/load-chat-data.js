@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const usersFile = require('../../users.json');
 
 router.post('/', (req, res) => {
@@ -9,7 +8,7 @@ router.post('/', (req, res) => {
     if (req.body.toLoad == 'group') {
         let groupFile = require(`../../groups/${groupName}.json`);
 
-        res.json({
+        res.send({
             permittedUsers: groupFile.permittedUsers,
             requestedUsers: groupFile.requestedUsers,
             chat: groupFile.chat,
@@ -32,7 +31,7 @@ router.post('/', (req, res) => {
 
         const chatFile = require(filePath);
 
-        res.json(chatFile);
+        res.send(chatFile);
     }
 });
 
