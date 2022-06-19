@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 const usersFile = require('../../users.json');
 
 router.post('/', (req, res) => {
@@ -19,17 +20,17 @@ router.post('/', (req, res) => {
         const userIndex = req.body.userIndex;
         const fUsername = req.body.fUsername;
 
-        var chatFileName = '';
+        var filePath = '';
 
         //finding chat file name
         for (let i = 0; i <= usersFile.users[userIndex].friends.length - 1; i++) {
             if (usersFile.users[userIndex].friends[i].username == fUsername) {
-                chatFileName = usersFile.users[userIndex].friends[i].chatFile;
+                filePath = '../../personal/' + usersFile.users[userIndex].friends[i].chatFile;
                 break;
             }
         }
 
-        const chatFile = require(`../../personal/${chatFileName}`);
+        const chatFile = require(filePath);
 
         res.json(chatFile);
     }

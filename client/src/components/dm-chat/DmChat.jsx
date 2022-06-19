@@ -6,13 +6,12 @@ import configFile from '../../config.json';
 import renderChat from '../../renderChat';
 
 const user = JSON.parse(localStorage.getItem('user'));
-const currentDmData = JSON.parse(localStorage.getItem('currentDmData'));
 const chatdata = JSON.parse(localStorage.getItem('chatData'));
 
-function sendMsg(setChat, socket) {
+function sendMsg(setChat, socket, chattingWith) {
   const typedMsg = document.getElementById('msg').value;
 
-  socket.emit('send-msg-dm', typedMsg, user.username, currentDmData.chattingWith);
+  socket.emit('send-msg-dm', typedMsg, user.username, chattingWith);
 
   updateChat(socket, setChat);
 
@@ -21,12 +20,12 @@ function sendMsg(setChat, socket) {
 }
 
 //updating chat
-function updateChat(socket, setChat) {
+function updateChat(socket, setChat, chattingWith) {
   socket.on('recive-msg-dm', (msg) => {
     sessionStorage.setItem('dmRawMsg', JSON.stringify(msg));
 
     for (let i = 0; i <= chatdata.friends.length; i++) {
-      if (chatdata.friends[i] === currentDmData.chattingWith) {
+      if (chatdata.friends[i] === chattingWith) {
         renderChat(i, 'storage', 'dm', setChat);
         break;
       }
@@ -38,14 +37,15 @@ function updateChat(socket, setChat) {
   });
 }
 
+
 export default function DmChat(props) {
   const [chat, setChat] = useState(props.chat);
 
   const socket = io(configFile.websocketServerURL);
 
-  updateChat(socket, setChat);
-
   const currentDmData = JSON.parse(localStorage.getItem('currentDmData'));
+
+  updateChat(socket, setChat, currentDmData.chattingWith);
 
   return (
     <div className='dm-chat-container'>
@@ -58,7 +58,7 @@ export default function DmChat(props) {
       <div className="enterMsg">
         <input placeholder='Type a message' type="text" id="msg" className="msg" />
 
-        <button onClick={() => { sendMsg(setChat, socket) }} className='sendMsg'>Send</button>
+        <button onClick={() => { sendMsg(setChat, socket, currentDmData.chattingWith) }} className='sendMsg'>Send</button>
       </div>
     </div>
   );

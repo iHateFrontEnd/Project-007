@@ -7,7 +7,6 @@ var chatData = JSON.parse(localStorage.getItem('chatData'));
 const user = JSON.parse(localStorage.getItem('user'));
 
 function unFriend() {
-
   const options = {
     method: 'POST',
     headers: {
@@ -23,20 +22,18 @@ function unFriend() {
   fetch(`${configFile.serverURL}/un-friend-user`, options);
 
   //modifying localStorage
-  var userIndex = -1;
-
   for (let i = 0; i <= chatData.friends.length; i++) {
-    userIndex++;
-
     if (chatData.friends[i] === currentDmData.chattingWith) {
+      alert(`You have removed ${currentDmData.chattingWith} from your friends list`);
+
       chatData.friends.splice(i, 1);
       localStorage.setItem('chatData', JSON.stringify(chatData));
       localStorage.removeItem('currentDmData');
-
       break;
     }
   }
 
+  window.location.reload();
   window.location.reload();
 }
 

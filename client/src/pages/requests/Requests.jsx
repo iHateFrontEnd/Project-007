@@ -79,8 +79,6 @@ async function declineRequest(declinedUserIndex) {
 
 //loading friend requests
 export default async function loadFriendRequests() {
-    let user = JSON.parse(localStorage.getItem('user'));
-
     const options = {
         method: 'POST',
         headers: {

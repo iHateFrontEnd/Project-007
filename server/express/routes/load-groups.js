@@ -4,6 +4,7 @@ const fs = require('fs');
 
 router.post('/', (req, res) => {
   fs.readFile('../users.json', 'utf-8', (err, data) => {
+
     const usersFile = JSON.parse(data);
 
 

@@ -4,15 +4,16 @@ const fs = require('fs');
 
 router.post('/', (req, res) => {
     fs.readFile('../users.json', 'utf-8', (err, data) => {
-        const usersFile = JSON.parse(data);
+        if (err) console.log(err);
+        else {
+            const userIndex = req.body.userIndex;
 
-        const userIndex = req.body.userIndex;
+            const usersFile = JSON.parse(data);
 
-        const requests = usersFile.users[userIndex].incomingRequests;
-
-        res.json({
-            requests: requests
-        });
+            res.json({
+                requests: usersFile.users[userIndex].incomingRequests
+            });
+        }
     })
 });
 
