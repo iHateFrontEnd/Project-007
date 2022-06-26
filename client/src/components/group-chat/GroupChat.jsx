@@ -5,11 +5,12 @@ import { io } from 'socket.io-client';
 import configFile from '../../config.json';
 import './GroupChat.css';
 
-const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
 const user = JSON.parse(localStorage.getItem('user'));
 const chatData = JSON.parse(localStorage.getItem('chatData'));
 
 function sendMsg(setChat, socket) {
+  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+
   var typedMsg = document.getElementById('msg').value;
   const msg = JSON.parse(sessionStorage.getItem('rawMsg'));
 
@@ -22,6 +23,8 @@ function sendMsg(setChat, socket) {
 }
 
 function updateChat(setChat, socket) {
+  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+
   //updating the messages
   socket.on('recive-msg-groups', (msg) => {
     sessionStorage.setItem('rawMsg', JSON.stringify(msg));

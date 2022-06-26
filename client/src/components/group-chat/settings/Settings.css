@@ -7,6 +7,13 @@ h1 {
     padding-bottom: 5vh;
 }
 
+h2 {
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-size: 5vh;
+    padding-bottom: 5vh;
+}
+
 .groupName-heading {
     color: black;
     font-family: 'Poppins', sans-serif;
@@ -138,6 +145,17 @@ ul {
 .remove-user-btn {
     margin-right: 150vh;
     background-color: rgb(255, 60, 0);
+    height: 10vh;
+    width: 50vh;
+    font-family: 'poppins', sans-serif;
+    border-radius: 5vh;
+    border-style: none;
+    font-size: 5vh;
+}
+
+.allow-user {
+    margin-right: 150vh;
+    background-color: rgb(11, 207, 11);
     height: 10vh;
     width: 50vh;
     font-family: 'poppins', sans-serif;

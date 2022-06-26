@@ -27,7 +27,6 @@ function removeUser(index) {
   currentGroupData.permittedUsers.splice(index, 1);
   localStorage.setItem('currentGroupData', JSON.stringify(currentGroupData));
 
-
   ReactDOM.render(
     <Homepage frame={<Settings />} />, document.getElementById('root')
   );

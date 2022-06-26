@@ -1,7 +1,7 @@
 const configFile = require('../config.json');
 const io = require('socket.io')(5000, {
     cors: {
-        origin: 'http://localhost:3000'
+        origin: 'http://192.168.1.168:3000'
     },
 });
 const fs = require('fs');

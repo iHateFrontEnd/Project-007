@@ -5,7 +5,7 @@ import GroupChat from './components/group-chat/GroupChat';
 import DmChat from './components/dm-chat/DmChat';
 
 export default function trimMsg(data, chatType, setChat) {
-  console.log(data)
+  console.log(data);
 
   var stringMsg = JSON.stringify(data);
 
@@ -22,6 +22,8 @@ export default function trimMsg(data, chatType, setChat) {
 
   //removing } (this is the last charecter of all the msg's)
   rawMsg[0][rawMsg[0].length - 1] = rawMsg[0][rawMsg[0].length - 1].slice(0, -1) + '';
+
+  console.log(rawMsg);
 
   if (chatType === 'groups') sessionStorage.setItem('rawMsg', stringMsg);
   else if (chatType === 'dm') sessionStorage.setItem('dmRawMsg', stringMsg);
@@ -40,7 +42,7 @@ export default function trimMsg(data, chatType, setChat) {
         <Homepage frame={<DmChat chat={msgArr} />} />, document.getElementById('root')
       );
     } else {
-      setChat(<p>Hello world</p>);
+      setChat(msgArr);
     }
   } else {
     if (setChat === null) {

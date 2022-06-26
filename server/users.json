@@ -7,9 +7,16 @@
         {
           "username": "fox",
           "chatFile": "fox&rushabh.json"
+        },
+        {
+          "username": "rama",
+          "chatFile": "rushabh&rama.json"
         }
       ],
-      "groups": [],
+      "groups": [
+        "Rushabh's-group",
+        "Rushabh's-group"
+      ],
       "incomingRequests": [],
       "sentRequest": []
     },
@@ -24,6 +31,21 @@
       ],
       "groups": [
         "rushabh's-group"
+      ],
+      "incomingRequests": [],
+      "sentRequest": []
+    },
+    {
+      "username": "rama",
+      "password": "000",
+      "friends": [
+        {
+          "username": "rushabh",
+          "chatFile": "rushabh&rama.json"
+        }
+      ],
+      "groups": [
+        "anna-cruel"
       ],
       "incomingRequests": [],
       "sentRequest": []
