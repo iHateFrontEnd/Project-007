@@ -8,7 +8,7 @@ router.post('/', (req, res) => {
     if (req.body.toLoad == 'group') {
         let groupFile = require(`../../groups/${groupName}.json`);
 
-        res.send({
+        res.json({
             permittedUsers: groupFile.permittedUsers,
             requestedUsers: groupFile.requestedUsers,
             chat: groupFile.chat,
@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
 
         const chatFile = require(filePath);
 
-        res.send(chatFile);
+        res.json(chatFile);
     }
 });
 

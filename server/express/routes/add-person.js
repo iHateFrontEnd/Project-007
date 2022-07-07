@@ -8,12 +8,9 @@ router.post('/', (req, res) => {
   const groupName = req.body.groupName;
 
   var userFound = false;
-  var userIndex = -1;
 
-  //confirming user
-  for (let i = 0; i <= usersFile.users.length - 1; i++) {
-    userIndex++;
-    if (usersFile.users[i].username === toAddPerson) {
+  for(var userIndex = 0; userIndex <= usersFile.users.length; userIndex++) {
+    if(usersFile.users[userIndex].username == toAddPerson) {
       userFound = true;
       break;
     }
@@ -41,6 +38,9 @@ router.post('/', (req, res) => {
 
   //updating users.json
   usersFile.users[userIndex].groups.push(groupName);
+
+  console.log(usersFile.users[userIndex].groups);
+
 
   fs.writeFile('../users.json', JSON.stringify(usersFile), (err) => {
     if (err) {
