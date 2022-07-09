@@ -1,38 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const usersFile = require('../../users.json');
+const { MongoClient } = require('mongodb');
+const fs = require('fs');
+
+async function loadChatData(userIndex, res) {
+  const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority';
+
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const usersDB = await client.db('user-data').collection('user').findOne({});
+
+    var friendsArr = [];
+
+    for (let i = 0; i <= usersDB.users[userIndex].friends.length - 1; i++) {
+      friendsArr.push(usersDB.users[userIndex].friends[i].username);
+    }
+
+    res.json(
+      {
+        friends: friendsArr,
+        groups: usersDB.users[userIndex].groups
+      }
+    );
+  } catch(err) {
+    console.log(err); 
+
+    res.end();
+  }
+}
 
 router.post('/', (req, res) => {
-    const groupName = req.body.groupName;
+  const userIndex = req.body.userIndex;
 
-    if (req.body.toLoad == 'group') {
-        let groupFile = require(`../../groups/${groupName}.json`);
-
-        res.json({
-            permittedUsers: groupFile.permittedUsers,
-            requestedUsers: groupFile.requestedUsers,
-            chat: groupFile.chat,
-            groupName: groupName
-        });
-
-    } else if (req.body.toLoad == 'dm') {
-        const userIndex = req.body.userIndex;
-        const fUsername = req.body.fUsername;
-
-        var filePath = '';
-
-        //finding chat file name
-        for (let i = 0; i <= usersFile.users[userIndex].friends.length - 1; i++) {
-            if (usersFile.users[userIndex].friends[i].username == fUsername) {
-                filePath = '../../personal/' + usersFile.users[userIndex].friends[i].chatFile;
-                break;
-            }
-        }
-
-        const chatFile = require(filePath);
-
-        res.json(chatFile);
-    }
+  loadChatData(userIndex, res);
 });
 
 module.exports = router;

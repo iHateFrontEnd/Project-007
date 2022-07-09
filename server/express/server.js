@@ -11,7 +11,7 @@ app.use(express.json());
 //importing routes
 const loginRoute = require('./routes/login');
 const signUpRoute = require('./routes/sign-up');
-const loadChatData = require('./routes/load-chat-data');
+const loadChat = require('./routes/load-chat');
 const friendRequest = require('./routes/add-friend');
 const joinGroup = require('./routes/join-group');
 const createGroup = require('./routes/create-group');
@@ -20,7 +20,7 @@ const changePassword = require('./routes/change-password');
 const loadFriendRequests = require('./routes/load-friend-requests');
 const declineRequest = require('./routes/decline-request');
 const addPerson = require('./routes/add-person');
-const loadGroups = require('./routes/load-groups');
+const loadChatData = require('./routes/load-chat-data');
 const leaveGroup = require('./routes/leave-group');
 const changeGroupName = require('./routes/change-group-name');
 const removeUser = require('./routes/remove-user');
@@ -38,7 +38,7 @@ app.use('/login', loginRoute);
 app.use('/sign-up', signUpRoute);
 
 //send chat data
-app.use('/load-chat-data', loadChatData);
+app.use('/load-chat', loadChat);
 
 //friend request
 app.use('/friend-request', friendRequest);
@@ -65,7 +65,7 @@ app.use('/decline-request', declineRequest);
 app.use('/add-person', addPerson);
 
 //loading groups
-app.use('/load-groups', loadGroups);
+app.use('/load-chat-data', loadChatData);
 
 //leaving group 
 app.use('/leave-group', leaveGroup);

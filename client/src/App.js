@@ -17,7 +17,7 @@ async function loadGroups() {
     })
   }
 
-  const res = await fetch(`${configFile.serverURL}/load-groups`, options);
+  const res = await fetch(`${configFile.serverURL}/load-chat-data`, options);
   const data = await res.json();
 
   console.log(data);
