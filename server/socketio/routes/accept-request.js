@@ -23,7 +23,6 @@ async function acceptRequest(toAcceptUser, userIndex, username, socket) {
             }
         }
 
-
         //for the user who accepted the request
         for (let i = 0; i <= users.users[userIndex].incomingRequests.length; i++) {
             if (users.users[userIndex].incomingRequests[i] == toAcceptUser) {
@@ -43,7 +42,7 @@ async function acceptRequest(toAcceptUser, userIndex, username, socket) {
         users.users[toAcceptUserIndex].friends.push(
             {
                 username: username,
-                chatFile: `${username}&${toAcceptUser}.json`
+                collectionName: `${username}&${toAcceptUser}`
             }
         );
 
@@ -51,7 +50,7 @@ async function acceptRequest(toAcceptUser, userIndex, username, socket) {
         users.users[userIndex].friends.push(
             {
                 username: toAcceptUser,
-                chatFile: `${username}&${toAcceptUser}.json`
+                collectionName: `${username}&${toAcceptUser}`
             }
         );
 
@@ -61,12 +60,11 @@ async function acceptRequest(toAcceptUser, userIndex, username, socket) {
         //creating the chat file 
         configFile.dmChatLayout.permittedUsers.push(toAcceptUser, username);
 
-        fs.writeFile(`../personal/${username}&${toAcceptUser}.json`, JSON.stringify(configFile.dmChatLayout), (err) => {
-            if (err) console.log(err);
-        });
+        //creating chat file
+        await client.db('personal').createCollection(`${username}&${toAcceptUser}`);
 
         socket.broadcast.emit('added-friend', username, toAcceptUser);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 }

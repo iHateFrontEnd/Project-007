@@ -18,15 +18,15 @@ async function loginUser(username, password, res) {
         var passwordStr;
         var usernameStr;
 
-        for(var userIndex = 0; userIndex <= usersDB.users.length - 1; userIndex++) {
+        for (var userIndex = 0; userIndex <= usersDB.users.length - 1; userIndex++) {
             passwordStr = usersDB.users[userIndex].password;
             usernameStr = usersDB.users[userIndex].username;
-            
-            if(usernameStr == username && passwordStr == password) {
+
+            if (usernameStr == username && passwordStr == password) {
                 userFound = true;
                 break;
             }
-        } 
+        }
 
         if (userFound == true) {
             res.json({
@@ -41,7 +41,7 @@ async function loginUser(username, password, res) {
                 reason: 'user not found'
             });
         }
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 }

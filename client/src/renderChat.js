@@ -51,7 +51,8 @@ export default async function renderChat(index, toUse, chatType, setChat) {
         body: JSON.stringify({
           toLoad: 'dm',
           userIndex: user.userIndex,
-          fUsername: chatData.friends[index]
+          fUsername: chatData.friends[index],
+          username: user.username
         })
       }
 

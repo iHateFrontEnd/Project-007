@@ -17,6 +17,7 @@ router.post('/', (req, res) => {
 
     } else if (req.body.toLoad == 'dm') {
         const userIndex = req.body.userIndex;
+        const username = req.body.username;
         const fUsername = req.body.fUsername;
 
         var filePath = '';
