@@ -1,53 +1,58 @@
 const express = require('express');
 const router = express.Router();
 const usersFile = require('../../users.json');
+const { MongoClient } = require('mongodb');
 const configFile = require('../../config.json');
 const fs = require('fs');
 
+//f refers to friend
+async function addFriend(res, userIndex, username, fUsername, fUserIndex) {
+    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
+
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+
+        const users = await client.db('user-data').collection('user').findOne({});
+
+        //writing to incoming requests
+        users.users[userIndex].sentRequest.push(fUsername);
+
+        //wrirting to sentRequests
+        users.users[fUserIndex].incomingRequests.push(username);
+
+        await client.db('user-data').collection('user').replaceOne({}, users, {});
+
+        res.json({
+            status: 'success'
+        });
+    } catch(err) {
+        console.log(err);
+    }
+}
+
 router.post('/', (req, res) => {
-    //f refers to friend        
     const userIndex = parseInt(req.body.userIndex);
     const username = req.body.username;
     const fUsername = req.body.fUsername;
 
-    var fUserFound = false;
-    var fUserIndex = -1;
+    var userFound = false;
 
-    //checking if friend exists
-    for (let i = 0; i <= usersFile.users.length - 1; i++) {
-        fUserIndex++;
-
-        if (usersFile.users[i].username == fUsername) {
-            fUserFound = true;
+    for (var fUserIndex = 0; fUserIndex <= usersFile.users.length - 1; fUserIndex++) {
+        if (usersFile.users[fUserIndex].username == fUsername) {
+            userFound = true;
             break;
         }
     }
 
-    if (fUserFound == true) {
-        res.json({
-            status: 'success'
-        });
-
-        //writing to incoming requests
-        usersFile.users[userIndex].sentRequest.push(fUsername);
-
-        //wrirting to sentRequests
-        usersFile.users[fUserIndex].incomingRequests.push(username);
-
-        fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
-            if (err) {
-                console.log(err);
-            }
-        });
+    if(userFound == true) {
+        addFriend(res, userIndex, username, fUsername, fUserIndex); 
     } else {
         res.json({
-            status: 'failed',
-            reason: 'friend not found'
+            status: 'failed'
         });
-
     }
-
-    res.end();
 });
 
 module.exports = router;

@@ -1,20 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
+const { MongoClient } = require('mongodb');
+
+async function loadFriendReqs(res, userIndex) { 
+    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
+
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+
+        const users = await client.db('user-data').collection('user').findOne({});
+
+        res.send({
+            requests: users.users[userIndex].incomingRequests
+        });
+    } catch(err) {
+        console.log(err);
+    }
+}
 
 router.post('/', (req, res) => {
-    fs.readFile('../users.json', 'utf-8', (err, data) => {
-        if (err) console.log(err);
-        else {
-            const userIndex = req.body.userIndex;
-
-            const usersFile = JSON.parse(data);
-
-            res.json({
-                requests: usersFile.users[userIndex].incomingRequests
-            });
-        }
-    })
+    loadFriendReqs(res, req.body.userIndex);
 });
 
 module.exports = router;

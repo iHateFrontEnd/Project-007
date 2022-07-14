@@ -18,7 +18,7 @@ async function loginUser(username, password, res) {
         var passwordStr;
         var usernameStr;
 
-        for(var userIndex = 0; userIndex <= usersDB.users.length; userIndex++) {
+        for(var userIndex = 0; userIndex <= usersDB.users.length - 1; userIndex++) {
             passwordStr = usersDB.users[userIndex].password;
             usernameStr = usersDB.users[userIndex].username;
             
