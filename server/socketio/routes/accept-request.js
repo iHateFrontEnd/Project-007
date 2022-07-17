@@ -42,7 +42,7 @@ async function acceptRequest(toAcceptUser, userIndex, username, socket) {
         users.users[toAcceptUserIndex].friends.push(
             {
                 username: username,
-                collectionName: `${username}&${toAcceptUser}`
+                collectionName: `${username}_${toAcceptUser}`
             }
         );
 
@@ -50,18 +50,21 @@ async function acceptRequest(toAcceptUser, userIndex, username, socket) {
         users.users[userIndex].friends.push(
             {
                 username: toAcceptUser,
-                collectionName: `${username}&${toAcceptUser}`
+                collectionName: `${username}_${toAcceptUser}`
             }
         );
 
         //updating DB
         await client.db('user-data').collection('user').replaceOne({}, users, {});
 
+
+        //creating chat file
+        await client.db('personal').createCollection(`${username}_${toAcceptUser}`);
+
         //creating the chat file 
         configFile.dmChatLayout.permittedUsers.push(toAcceptUser, username);
 
-        //creating chat file
-        await client.db('personal').createCollection(`${username}&${toAcceptUser}`);
+        await client.db('personal').collection(`${username}_${toAcceptUser}`).insertOne(configFile.dmChatLayout);
 
         socket.broadcast.emit('added-friend', username, toAcceptUser);
     } catch (err) {

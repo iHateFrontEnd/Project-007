@@ -52,11 +52,10 @@ export default async function renderChat(index, toUse, chatType, setChat) {
           toLoad: 'dm',
           userIndex: user.userIndex,
           fUsername: chatData.friends[index],
-          username: user.username
         })
       }
 
-      const res = await fetch(`${configFile.serverURL}/load-chat-data`, options);
+      const res = await fetch(`${configFile.serverURL}/load-chat`, options);
       const data = await res.json();
 
       localStorage.setItem('currentDmData', JSON.stringify({

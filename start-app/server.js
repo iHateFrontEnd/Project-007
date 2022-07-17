@@ -24,7 +24,7 @@ async function saveNonStaticFiles(res) {
   }
 }
 
-app.get('/non-static-file', (req, res) => {
+app.get('/reset-users', (req, res) => {
   saveNonStaticFiles(res);
 });
 
