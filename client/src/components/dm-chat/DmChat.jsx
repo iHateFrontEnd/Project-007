@@ -11,7 +11,7 @@ const chatdata = JSON.parse(localStorage.getItem('chatData'));
 function sendMsg(setChat, socket, chattingWith) {
   const typedMsg = document.getElementById('msg').value;
 
-  socket.emit('send-msg-dm', typedMsg, user.username, chattingWith);
+  socket.emit('send-msg-dm', typedMsg, user.userIndex, user.username, chattingWith);
 
   updateChat(socket, setChat);
 

@@ -16,8 +16,8 @@ io.on('connection', socket => {
     });
 
     //updating msg's for dm chat
-    socket.on('send-msg-dm', (msg, username, fUsername) => {
-        sendDmMsg(username, msg, fUsername, io); 
+    socket.on('send-msg-dm', (msg, userIndex, username, fUsername) => {
+        sendDmMsg(msg, userIndex, username, fUsername, io);
     });
 
     //accepting friend request 
