@@ -1,44 +1,39 @@
 const express = require('express');
 const router = express.Router();
-const groupsFile = require('../../groups.json');
-const usersFile = require('../../users.json');
-var configFile = require('../../config.json');
-const fs = require('fs');
+const configFile = require('../../config.json');
+const { MongoClient } = require('mongodb');
+
+async function createGroup(username, groupName, userIndex, res) {
+    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
+
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+
+        const users = await client.db('user-data').collection('user').findOne({});
+        users.users[userIndex].groups.push(groupName);
+
+        await client.db('user-data').collection('user').replaceOne({}, users, {});
+
+        await client.db('groups').createCollection(groupName);
+
+        //configuring chat file
+        configFile.groupChatLayout.groupName = groupName;
+        configFile.groupChatLayout.permittedUsers.push(username);
+
+        await client.db('groups').collection(groupName).insertOne(configFile.groupChatLayout);
+    } catch(err) {
+        console.log(err);
+    }
+}
 
 router.post('/', (req, res) => {
     const username = req.body.username;
-    const groupName = req.body.groupName;
+    const groupName = req.body.groupName.replaceAll(' ', '-');
     const userIndex = req.body.userIndex;
 
-    //for groups.json
-    groupsFile.groups.push(groupName);
-
-    fs.writeFile('../groups.json', JSON.stringify(groupsFile, null, 2), (err) => {
-        if (err) {
-            console.log(err);
-        }
-    });
-
-    //for users.json
-    usersFile.users[userIndex].groups.push(groupName);
-
-    fs.writeFile('../users.json', JSON.stringify(usersFile, null, 2), (err) => {
-        if (err) {
-            console.log(err);
-        }
-    });
-
-    //create a group file in /groups
-    configFile.groupChatLayout.permittedUsers.push(username);
-
-    //saving the group file 
-    configFile.groupChatLayout.groupName = groupName;
-
-    fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(configFile.groupChatLayout, null, 2), (err) => {
-        if (err) {
-            console.log(err);
-        }
-    });
+    createGroup(username, groupName, userIndex, res);
 
     res.end();
 });

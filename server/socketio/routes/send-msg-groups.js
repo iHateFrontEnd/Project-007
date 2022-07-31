@@ -1,15 +1,21 @@
-function sendGroupsMsg(username, typedMsg, groupName, io) {
-    let group = require(`../groups/${groupName}.json`);
+const { MongoClient } = require('mongodb');
 
-    group.chat.push({ [username]: typedMsg });
+async function sendGroupsMsg(username, typedMsg, groupName, io) {
+    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
 
-    fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(group, null, 2), (err) => {
-        if (err) {
-            console.log(err);
-        }
-    });
+    const client = new MongoClient(uri);
 
-    io.emit('recive-msg-groups', group.chat);
+    try {
+        const groupCollection = await client.db('groups').collection(groupName).findOne({});
+
+        groupCollection.chat.push({ [username]: typedMsg });
+
+        io.emit('recive-msg-groups', groupCollection.chat);
+
+        await client.db('groups').collection(groupName).replaceOne({}, groupCollection, {});
+    } catch(err) {
+        console.log(err);
+    }
 }
 
 module.exports = sendGroupsMsg;

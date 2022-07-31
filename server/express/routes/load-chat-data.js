@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
-const fs = require('fs');
 
-async function loadChatData(userIndex, res) {
+async function loadDmData(userIndex, res) {
   const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority';
 
   const client = new MongoClient(uri);
@@ -12,6 +11,8 @@ async function loadChatData(userIndex, res) {
     await client.connect();
 
     const usersDB = await client.db('user-data').collection('user').findOne({});
+
+    console.log(usersDB);
 
     var friendsArr = [];
 
@@ -32,10 +33,33 @@ async function loadChatData(userIndex, res) {
   }
 }
 
+async function loadGroupData(groupName, res) {
+  const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority';
+
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const chatCollection = await client.db('groups').collection(groupName).findOne({});
+
+    res.json({
+      permittedUsers: chatCollection.permittedUsers,
+      requestedUsers: chatCollection.requestedUsers,
+      chat: chatCollection.chat,
+      groupName: groupName
+    });
+  } catch(err) {
+    console.log(err);
+  }
+}
+
 router.post('/', (req, res) => {
   const userIndex = req.body.userIndex;
+  const groupName = req.body.groupName;
 
-  loadChatData(userIndex, res);
+  if(req.body.toLoad == 'group') loadGroupData(groupName, res);
+  else if (req.body.toLoad == 'dm') loadDmData(userIndex, res);
 });
 
 module.exports = router;

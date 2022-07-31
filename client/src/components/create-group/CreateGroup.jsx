@@ -10,7 +10,7 @@ var chatData = JSON.parse(localStorage.getItem('chatData'));
 async function saveGroup() {
     //posting data to server to create group 
     var user = JSON.parse(localStorage.getItem('user'));
-    const groupName = document.getElementById('groupName').value;
+    const groupName = document.getElementById('groupName').value.replaceAll(' ', '-');
     const trimedGroupName = groupName.replaceAll(' ', '-');
 
     const options = {
