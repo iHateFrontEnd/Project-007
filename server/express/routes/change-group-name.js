@@ -1,84 +1,53 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-var groupsFile = require('../../groups.json');
-var usersFile = require('../../users.json');
+const { MongoClient } = require('mongodb');
+
+async function changeGroupName(newGroupName, oldGroupName, userIndex, res) {
+    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
+
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+
+        var group = JSON.stringify(await client.db('groups').collection(oldGroupName).findOne({})).replaceAll(oldGroupName, newGroupName);
+        var users = JSON.stringify(await client.db('user-data').collection('user').findOne({})).replaceAll(oldGroupName, newGroupName);
+
+        const parsedUsers = JSON.parse(users);
+        const parsedGroup = JSON.parse(group);
+
+        const chatData = {
+            groups: parsedUsers.users[userIndex].groups,
+            friends: parsedUsers.users[userIndex].friends
+        }
+
+        //removing the chat file/collection and creating a new collection with the new name
+        await client.db('groups').dropCollection(oldGroupName);
+
+        const currentGroupData = {
+            permittedUsers: parsedGroup.permittedUsers,
+            requestedUsers: parsedGroup.requestedUsers
+        }
+
+        await client.db('groups').createCollection(newGroupName);
+
+        res.json({
+            chatData: chatData,
+            currentGroupData: currentGroupData
+        });
+
+        await client.db('groups').collection(newGroupName).insertOne(JSON.parse(group));
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 router.post('/', (req, res) => {
-    try {
-
-        req.body.newGroupName = req.body.newGroupName.replaceAll(' ', '-');
-    } catch (err) {
-        //pass
-    }
-
-
-    const newGroupName = req.body.newGroupName;
-    const groupName = req.body.groupName;
+    const newGroupName = req.body.newGroupName.replaceAll(' ', '-');
     const userIndex = req.body.userIndex;
+    const oldGroupName = req.body.groupName;
 
-    //modifying the groups.json
-    var groupIndex = -1;
-
-    for (let i = 0; i <= groupsFile.groups.length; i++) {
-        groupIndex++;
-
-        if (groupsFile.groups[i] == groupName) break;
-    }
-
-    groupsFile.groups.splice(groupIndex, 1);
-    groupsFile.groups.push(newGroupName);
-
-    fs.writeFile('../groups.json', JSON.stringify(groupsFile), (err) => {
-        if (err) console.log(err);
-    });
-
-    //modifying users.json
-    groupIndex = -1;
-
-    for (let i = 0; i <= usersFile.users[userIndex].groups.length; i++) {
-        groupIndex++;
-
-        if (usersFile.users[userIndex].groups[i] == groupName) break;
-    }
-
-    usersFile.users[userIndex].groups.splice(groupIndex, 1);
-    usersFile.users[userIndex].groups.push(newGroupName);
-
-    fs.writeFile('../users.json', JSON.stringify(usersFile), (err) => {
-        if (err) console.log(err);
-    });
-
-    //modifying the main group/chat file
-    var groupFile = require(`../../groups/${groupName}.json`);
-
-    groupFile.groupName = newGroupName;
-
-    fs.writeFile(`../groups/${groupName}.json`, JSON.stringify(groupFile), (err) => {
-        if (err) console.log(err);
-    });
-
-    //renaming the main groups/chat file
-    fs.rename(`../groups/${groupName}.json`, `./groups/${newGroupName}.json`, (err) => {
-        if (err) console.log(err);
-    });
-
-    const chatData = {
-        groups: usersFile.users[userIndex].groups,
-        friends: usersFile.users[userIndex].friends
-    }
-
-    const currentGroupData = {
-        requestedUsers: groupFile.requestedUsers,
-        permittedUsers: groupFile.permittedUsers
-    }
-
-    res.json({
-        chatData,
-        currentGroupData
-    });
-
-    res.end();
+    changeGroupName(newGroupName, oldGroupName, userIndex, res);
 });
 
 module.exports = router;
