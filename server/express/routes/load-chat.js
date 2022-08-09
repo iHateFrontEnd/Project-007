@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
-const usersFile = require('../../users.json');
 
 async function loadChat(res, fUsername, userIndex) {
     const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
@@ -33,24 +32,67 @@ async function loadChat(res, fUsername, userIndex) {
     }
 }
 
-router.post('/', (req, res) => {
-    const groupName = req.body.groupName;
+async function loadGroupChat(groupName, res) {
+    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
 
-    if (req.body.toLoad == 'group') {
-        let groupFile = require(`../../groups/${groupName}.json`);
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+
+        const group = await client.db('groups').collection(groupName).findOne({});
 
         res.json({
-            permittedUsers: groupFile.permittedUsers,
-            requestedUsers: groupFile.requestedUsers,
-            chat: groupFile.chat,
+            permittedUsers: group.permittedUsers,
+            requestedUsers: group.requestedUsers,
+            chat: group.chat,
             groupName: groupName
         });
+    } catch (err) {
+        console.log(err);
+    }
+}
 
+async function chatData(userIndex, res) {
+    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
+
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+
+        const users = await client.db('user-data').collection('user').findOne({});
+
+        var friendsArr = [];
+
+        for (let i = 0; i <= users.users[userIndex].friends.length - 1; i++) {
+            friendsArr.push(users.users[userIndex].friends[i].username);
+        }
+
+        res.json(
+            {
+                friends: friendsArr,
+                groups: users.users[userIndex].groups
+            }
+        );
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+router.post('/', (req, res) => {
+    if (req.body.toLoad == 'group') {
+        const groupName = req.body.groupName;
+        loadGroupChat(groupName, res);
     } else if (req.body.toLoad == 'dm') {
         const userIndex = req.body.userIndex;
         const fUsername = req.body.fUsername;
 
         loadChat(res, fUsername, userIndex);
+    } else if (req.body.toLoad == 'chat-data') {
+        const userIndex = req.body.userIndex;
+
+        chatData(userIndex, res);
     }
 });
 

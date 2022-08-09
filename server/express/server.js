@@ -20,7 +20,6 @@ const changePassword = require('./routes/change-password');
 const loadFriendRequests = require('./routes/load-friend-requests');
 const declineRequest = require('./routes/decline-request');
 const addPerson = require('./routes/add-person');
-const loadChatData = require('./routes/load-chat-data');
 const leaveGroup = require('./routes/leave-group');
 const changeGroupName = require('./routes/change-group-name');
 const removeUser = require('./routes/remove-user');
@@ -63,9 +62,6 @@ app.use('/decline-request', declineRequest);
 
 //adding people to a group
 app.use('/add-person', addPerson);
-
-//loading groups
-app.use('/load-chat-data', loadChatData);
 
 //leaving group 
 app.use('/leave-group', leaveGroup);

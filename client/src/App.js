@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Login from './components/login/Login.jsx';
 import Homepage from './components/homepage/Homepage.jsx'; import configFile from './config.json';
 import Logo from './components/homepage/Logo.js';
@@ -13,14 +13,13 @@ async function loadGroups() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      userIndex: user.userIndex
+      userIndex: user.userIndex,
+      toLoad: 'chat-data'
     })
   }
 
-  const res = await fetch(`${configFile.serverURL}/load-chat-data`, options);
+  const res = await fetch(`${configFile.serverURL}/load-chat`, options);
   const data = await res.json();
-
-  console.log(data);
 
   localStorage.setItem('chatData', JSON.stringify({
     groups: data.groups,

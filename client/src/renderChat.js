@@ -17,7 +17,7 @@ export default async function renderChat(index, toUse, chatType, setChat) {
         })
       }
 
-      const res = await fetch(`${configFile.serverURL}/load-chat-data`, options);
+      const res = await fetch(`${configFile.serverURL}/load-chat`, options);
       const data = await res.json();
 
       await localStorage.setItem('currentGroupData', JSON.stringify({
@@ -32,7 +32,6 @@ export default async function renderChat(index, toUse, chatType, setChat) {
     if (toUse === 'network') toUseNetwork();
     else if (toUse === 'storage') {
       const rawMsg = JSON.parse(sessionStorage.getItem('rawMsg'));
-
 
       trimMsg(rawMsg, 'groups', setChat, toUse);
     }

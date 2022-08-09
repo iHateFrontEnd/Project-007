@@ -11,8 +11,8 @@ npm install --force
 cd ../start-app
 npm install
 
-echo "\n EVERYTHING IS INSTALLED, STARTING APP"
-
 cd ..
-chmod +x ./start-app.sh
-./startMe.sh
+
+chmod +x ./startMe.sh
+
+echo "\n ### EVERYTHING IS INSTALLED, TO START THE APP RUN: ./startMe.sh ###"
