@@ -16,7 +16,7 @@ This app or project uses ReactJS for front-end, ExpressJS and SocketIO (a Web so
 ## Contributers:
 Contributers are always welcome!
 
-<a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
+<a href = "https://github.com/iHateFrontEnd/Vattagutar/graphs/contributors">
   <img src = "https://contrib.rocks/image?repo = GitHub_username/repository_name"/>
 </a>
 
