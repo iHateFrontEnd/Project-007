@@ -14,5 +14,3 @@ npm install
 echo "\n EVERYTHING IS INSTALLED, STARTING APP"
 
 cd ..
-chmod +x ./start-app.sh
-./startMe.sh
