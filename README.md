@@ -17,7 +17,7 @@ This app or project uses ReactJS for front-end, ExpressJS and SocketIO (a Web so
 Contributers are always welcome!
 
 <a href = "https://github.com/iHateFrontEnd/Vattagutar/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo = GitHub_username/repository_name"/>
+  <img src = "https://contrib.rocks/image?repo = iHateFrontEnd/Vattagutar"/>
 </a>
 
 Made with [contributors-img](https://contrib.rocks).
