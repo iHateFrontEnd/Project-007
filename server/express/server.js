@@ -24,6 +24,7 @@ const leaveGroup = require('./routes/leave-group');
 const changeGroupName = require('./routes/change-group-name');
 const removeUser = require('./routes/remove-user');
 const unFriendUser = require('./routes/un-friend-user');
+const loadGroupData = require('./routes/load-group-data')
 const allowUsers = require('./routes/allow-users');
 
 app.get('/', (req, res) => {
@@ -32,6 +33,9 @@ app.get('/', (req, res) => {
 
 //loggin in a user
 app.use('/login', loginRoute);
+
+//load group data
+app.use('/load-group-data', loadGroupData);
 
 //creating a new user
 app.use('/sign-up', signUpRoute);

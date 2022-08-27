@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import loadGroupData from "../../../loadGroupData";
 import Settings from "./Settings";
 import Homepage from "../../homepage/Homepage";
 import './Settings.css';
 
-const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
-
 var permittedUsers = [];
+
+loadGroupData();
+
+const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
 
 try {
   for (let i = 0; i <= currentGroupData.permittedUsers.length - 1; i++) {

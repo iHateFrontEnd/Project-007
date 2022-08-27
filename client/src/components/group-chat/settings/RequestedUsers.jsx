@@ -2,12 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Settings from "./Settings";
 import Homepage from "../../homepage/Homepage";
+import loadGroupData from "../../../loadGroupData";
 import configFile from '../../../config.json';
 import './Settings.css';
 
-const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
 
 var requestedUsers = [];
+
+loadGroupData();
+
+const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
 
 try {
   if (currentGroupData.requestedUsers.length === 0) {
