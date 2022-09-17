@@ -25,38 +25,6 @@ function renderRequestedUsers() {
   );
 }
 
-async function changeGroupName() {
-  const user = JSON.parse(localStorage.getItem('user'));
-  var currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
-  const groupName = document.getElementById('groupName').value;
-
-  if (groupName != '') {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        newGroupName: groupName,
-        groupName: currentGroupData.groupName,
-        userIndex: user.userIndex
-      })
-    }
-
-    const res = await fetch(`${configFile.serverURL}/change-group-name`, options);
-    const data = await res.json();
-
-    localStorage.setItem('currentGroupData', JSON.stringify(data.currentGroupData));
-    localStorage.setItem('chatData', JSON.stringify(data.chatData));
-
-    window.location.reload();
-
-  } else {
-    alert('Please enter a proper group name');
-  }
-}
-
-
 export default class Settings extends React.Component {
   render() {
     return (
@@ -69,17 +37,6 @@ export default class Settings extends React.Component {
         <h2 className='groupName-heading'>➫ Check out the members of this group: </h2>
         <button className='settings-btn' onClick={renderViewMembers}>Check it out!</button>
 
-        <div className='edit-group-name-container'>
-          <h2 className='groupName-heading'>➫ Change the group name:</h2>
-
-          <input className='group-name' id='groupName' placeholder='Enter new group name' />
-
-          <br />
-          <br />
-          <br />
-
-          <button className='edit-group-name-btn' onClick={changeGroupName}>Change</button>
-        </div>
         <h2 className='groupName-heading'>➫ Remove some people from the group (for fun)</h2>
         <button className='settings-btn' onClick={renderRemovePeople}>Remove people</button>
       </div>

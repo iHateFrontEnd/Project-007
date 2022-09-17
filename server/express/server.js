@@ -22,7 +22,6 @@ const declineRequest = require('./routes/decline-request');
 const addPerson = require('./routes/add-person');
 const loadGroups = require('./routes/load-groups');
 const leaveGroup = require('./routes/leave-group');
-const changeGroupName = require('./routes/change-group-name');
 const removeUser = require('./routes/remove-user');
 const unFriendUser = require('./routes/un-friend-user');
 const allowUsers = require('./routes/allow-users');
@@ -69,9 +68,6 @@ app.use('/load-groups', loadGroups);
 
 //leaving group 
 app.use('/leave-group', leaveGroup);
-
-//changing group name
-app.use('/change-group-name', changeGroupName);
 
 //kicking / removing user out of the group
 app.use('/remove-user', removeUser);
