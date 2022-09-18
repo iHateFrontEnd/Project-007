@@ -18,7 +18,7 @@ async function addPerson() {
       },
       body: JSON.stringify({
         groupName: currentGroupData.groupName,
-        toAdd: toAddPerson
+        username: toAddPerson
       })
     }
 
@@ -27,6 +27,7 @@ async function addPerson() {
 
     if (data.status === 'failed') {
       alert(`User ${toAddPerson} does not exist :(, please try again with a proper username`);
+      console.log(data);
     } else {
       alert(`User ${toAddPerson} is now a member of this group :)`);
     }
