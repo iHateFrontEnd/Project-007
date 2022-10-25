@@ -11,38 +11,26 @@ async function loginUser(username, password, res) {
     try {
         await client.connect();
 
-        const usersDB = await client.db('user-data').collection('user').findOne({});
+        const user = await client.db('users').collection(username).findOne({});
 
-        var userFound = false;
-
-        var passwordStr;
-        var usernameStr;
-
-        for (var userIndex = 0; userIndex <= usersDB.users.length - 1; userIndex++) {
-            passwordStr = usersDB.users[userIndex].password;
-            usernameStr = usersDB.users[userIndex].username;
-
-            if (usernameStr == username && passwordStr == password) {
-                userFound = true;
-                break;
-            }
-        }
-
-        if (userFound == true) {
+        if (user.password == password) {
             res.json({
                 status: 'success',
-                userIndex: userIndex,
-                friends: usersDB.users[userIndex].friends,
-                groups: usersDB.users[userIndex].groups
+                friends: user.friends,
+                groups: user.groups
             });
         } else {
             res.json({
                 status: 'failed',
-                reason: 'user not found'
+                reason: 'incorrect password'
             });
         }
     } catch (err) {
         console.log(err);
+        res.json({
+            status: 'failed',
+            reason: 'user not found'
+        });
     }
 }
 

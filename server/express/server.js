@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 app.use(
   cors({
-    origin: 'http://192.168.1.168:3000'
+    origin: 'http://192.168.1.111:3000'
   })
 );
 app.use(express.json());
