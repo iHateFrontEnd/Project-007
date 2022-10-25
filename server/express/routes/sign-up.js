@@ -1,8 +1,7 @@
 const express = require('express');
-const fs = require('fs');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
-var usersFile = require('../../users.json');
+const configFile = require('../../config.json');
 
 async function createUser(username, password) {
     const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
@@ -12,23 +11,15 @@ async function createUser(username, password) {
     try {
         await client.connect();
 
-        //reading users
-        const oldUsersData = await client.db('user-data').collection('user').findOne({});
+        //creating a new user collection
+        await client.db('users').createCollection(username);
 
-        const userData = {
-            username: username,
-            password: password,
-            friends: [],
-            groups: [],
-            incomingRequests: [],
-            sentRequest: []
-        }
+        //configuring user
+        configFile.userLayout.username = username;
+        configFile.userLayout.password = password;
 
-        const newUsersData = oldUsersData;
 
-        newUsersData.users.push(userData);
-
-        await client.db('user-data').collection('user').replaceOne({}, newUsersData, {});
+        await client.db('users').collection(username).insertOne(configFile.userLayout);
     } catch (err) {
         console.log(err);
     }
