@@ -4,7 +4,7 @@ const { MongoClient } = require('mongodb');
 const configFile = require('../../config.json');
 
 async function createUser(username, password) {
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
+    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority';
 
     const client = new MongoClient(uri);
 
@@ -14,7 +14,6 @@ async function createUser(username, password) {
         //creating a new user collection
         await client.db('users').createCollection(username);
 
-        //configuring user
         configFile.userLayout.username = username;
         configFile.userLayout.password = password;
 
