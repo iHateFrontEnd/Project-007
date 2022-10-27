@@ -53,7 +53,7 @@ async function loadGroupChat(groupName, res) {
     }
 }
 
-async function chatData(userIndex, res) {
+async function chatData(username, res) {
     const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
 
     const client = new MongoClient(uri);
@@ -61,20 +61,12 @@ async function chatData(userIndex, res) {
     try {
         await client.connect();
 
-        const users = await client.db('user-data').collection('user').findOne({});
+        const user = await client.db('users').collection(useranme).findOne({});
 
-        var friendsArr = [];
-
-        for (let i = 0; i <= users.users[userIndex].friends.length - 1; i++) {
-            friendsArr.push(users.users[userIndex].friends[i].username);
-        }
-
-        res.json(
-            {
-                friends: friendsArr,
-                groups: users.users[userIndex].groups
-            }
-        );
+        res.json({
+            groups: user.groups,
+            friends: user.friends
+        });
     } catch (err) {
         console.log(err);
     }
@@ -90,9 +82,9 @@ router.post('/', (req, res) => {
 
         loadChat(res, fUsername, userIndex);
     } else if (req.body.toLoad == 'chat-data') {
-        const userIndex = req.body.userIndex;
+        const username = req.body.username;
 
-        chatData(userIndex, res);
+        chatData(username, res);
     }
 });
 
