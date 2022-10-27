@@ -85,7 +85,7 @@ export default async function loadFriendRequests() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            userIndex: user.userIndex
+            username: user.username 
         })
     }
 
