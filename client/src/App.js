@@ -4,16 +4,14 @@ import Homepage from './components/homepage/Homepage.jsx'; import configFile fro
 import Logo from './components/homepage/Logo.js';
 
 //this function loads all the  
-async function loadGroups() {
-  const user = JSON.parse(localStorage.getItem('user'));
-
+async function loadGroups(user) {
   const options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      userIndex: user.userIndex,
+      username: user.username,
       toLoad: 'chat-data'
     })
   }
@@ -33,7 +31,7 @@ function App() {
     const user = JSON.parse(localStorage.getItem('user'));
 
     if (user.isLoggedIn === true) {
-      loadGroups();
+      loadGroups(user);
 
       return <Homepage frame={Logo} />;
     } else {

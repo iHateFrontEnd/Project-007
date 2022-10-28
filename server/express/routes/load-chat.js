@@ -61,7 +61,7 @@ async function chatData(username, res) {
     try {
         await client.connect();
 
-        const user = await client.db('users').collection(useranme).findOne({});
+        const user = await client.db('users').collection(username).findOne({});
 
         res.json({
             groups: user.groups,

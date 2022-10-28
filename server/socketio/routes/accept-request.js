@@ -1,62 +1,50 @@
 const configFile = require('../../config.json');
 const { MongoClient } = require('mongodb');
 
-async function acceptRequest(toAcceptUser, userIndex, username, socket) {
-    //this is the user who sent the request
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
+async function acceptRequest(toAcceptUser, username, socket) {
+    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retrywrites=true&w=majority'
 
     const client = new MongoClient(uri);
 
     try {
         await client.connect();
 
-        const users = await client.db('user-data').collection('user').findOne({});
+        //user collection for toAcceptUser
+        var fUserCollection = await client.db('users').collection(toAcceptUser).findOne({});
 
-        var toAcceptUserIndex = -1;
 
-        //finding toAcceptUserIndex
-        for (let i = 0; i <= users.users.length - 1; i++) {
-            toAcceptUserIndex++;
-
-            if (users.users[i].username == toAcceptUser) {
+        for(let i = 0; i <= fUserCollection.sentRequests.length; i++) {
+            if(fUserCollection.sentRequests[i] == username) {
+                fUserCollection.sentRequests.splice(i, 1);
                 break;
             }
         }
 
-        //for the user who accepted the request
-        for (let i = 0; i <= users.users[userIndex].incomingRequests.length; i++) {
-            if (users.users[userIndex].incomingRequests[i] == toAcceptUser) {
-                users.users[userIndex].incomingRequests.splice(i, 1);
-                break;
-            }
-        }
-
-        //for the user who sent the request
-        for (let i = 0; i <= users.users[toAcceptUserIndex].sentRequest.length; i++) {
-            if (users.users[toAcceptUserIndex].sentRequest[i] == username) {
-                users.users[toAcceptUserIndex].sentRequest.splice(i, 1);
-                break;
-            }
-        }
-
-        users.users[toAcceptUserIndex].friends.push(
+        fUserCollection.friends.push(
             {
                 username: username,
                 collectionName: `${username}_${toAcceptUser}`
             }
-        );
+        ); 
 
+        await client.db('users').collection(toAcceptUser).replaceOne({}, fUserCollection, {});
 
-        users.users[userIndex].friends.push(
-            {
-                username: toAcceptUser,
-                collectionName: `${username}_${toAcceptUser}`
+        //editing user collection of the user to accepted the requests
+        var userCollection = await client.db('users').collection(username).findOne({})
+
+        for(let i = 0; i <= userCollection.incomingRequests.length; i++) {
+            if(userCollection.incomingRequests[i] == toAcceptUser) {
+                userCollection.incomingRequests.splice(i, 1);
+                break;
             }
-        );
+        }
 
-        //updating DB
-        await client.db('user-data').collection('user').replaceOne({}, users, {});
+        userCollection.friends.push({
+            username: toAcceptUser,
+            collectionName: `${username}_${toAcceptUser}`
+        });
 
+        await client.db('users').collection(username).replaceOne({}, userCollection, {});
 
         //creating chat file
         await client.db('personal').createCollection(`${username}_${toAcceptUser}`);
@@ -67,7 +55,7 @@ async function acceptRequest(toAcceptUser, userIndex, username, socket) {
         await client.db('personal').collection(`${username}_${toAcceptUser}`).insertOne(configFile.dmChatLayout);
 
         socket.broadcast.emit('added-friend', username, toAcceptUser);
-    } catch (err) {
+    } catch(err) {
         console.log(err);
     }
 }

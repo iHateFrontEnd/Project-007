@@ -1,6 +1,6 @@
 const io = require('socket.io')(5000, {
     cors: {
-        origin: 'http://192.168.1.111:3000'
+        origin: 'http://192.168.1.104:3000'
     },
 });
 
@@ -21,7 +21,7 @@ io.on('connection', socket => {
     });
 
     //accepting friend request 
-    socket.on('accept-request', (toAcceptUser, userIndex, username) => {
-        acceptRequest(toAcceptUser, userIndex, username, socket);
+    socket.on('accept-request', (toAcceptUser, username) => {
+        acceptRequest(toAcceptUser, username, socket);
     });
 });

@@ -41,7 +41,7 @@ function acceptRequest(acceptedUsername) {
 
     localStorage.setItem('chatData', JSON.stringify(chatData))
 
-    socket.emit('accept-request', acceptedUsername, user.userIndex, user.username);
+    socket.emit('accept-request', acceptedUsername, user.username);
 
     window.location.reload();
 }
@@ -65,7 +65,7 @@ async function declineRequest(declinedUserIndex) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            userIndex: user.userIndex,
+            username: user.username,
             toDeclineUserIndex: declinedUserIndex
         })
     }
