@@ -49,8 +49,8 @@ export default async function renderChat(index, toUse, chatType, setChat) {
         },
         body: JSON.stringify({
           toLoad: 'dm',
-          userIndex: user.userIndex,
-          fUsername: chatData.friends[index],
+          username: user.username,
+          fUsername: chatData.friends[index].username,
         })
       }
 
@@ -58,10 +58,8 @@ export default async function renderChat(index, toUse, chatType, setChat) {
       const data = await res.json();
 
       localStorage.setItem('currentDmData', JSON.stringify({
-        chattingWith: chatData.friends[index]
+        chattingWith: chatData.friends[index].username
       }));
-
-      console.log(data.chat);
 
       trimMsg(data.chat, 'dm', null);
     }

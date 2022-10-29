@@ -80,7 +80,7 @@ function chatButtonsForFriends(type) {
     for (let i = 0; i <= chatData.friends.length - 1; i++) {
       friendsArr.push(
         <p>
-          <button className='friends' onClick={() => { renderChat(i, 'network', 'dm', null) }} id={`friend${i}`}>{chatData.friends[i]}</button>
+          <button className='friends' onClick={() => { renderChat(i, 'network', 'dm', null) }} id={`friend${i}`}>{chatData.friends[i].username}</button>
         </p>
       );
     }
