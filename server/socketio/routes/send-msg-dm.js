@@ -1,36 +1,35 @@
 const { MongoClient } = require('mongodb');
 
-async function sendDmMsg(msg, userIndex, username, fUsername, io) {
+async function sendDmMsg(msg, username, fUsername, io) {
     const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority';
 
     const client = new MongoClient(uri);
 
     try {
         await client.connect();
+        
+        var collectionName;
 
-        const users = await client.db('user-data').collection('user').findOne({});
-
-        var collectionName = '';
-
-        for(let i = 0; i <= users.users[userIndex].friends.length; i++) {
-            var friend = users.users[userIndex].friends[i];
-
-            if (friend.username == fUsername) {
-                collectionName = friend.collectionName;
+        const userCollection = await client.db('users').collection(username).findOne({});
+        
+        //finding chat collection name
+        for(let i = 0; i <= userCollection.friends.length; i++){
+            if(userCollection.friends[i].username == fUsername) {
+                collectionName = userCollection.friends[i].collectionName;
                 break;
             }
         }
-        
-        const chat = await client.db('personal').collection(collectionName).findOne({});
-    
-        chat.chat.push({
+
+        const chatCollection = await client.db('personal').collection(collectionName).findOne({});
+
+        chatCollection.chat.push({
             [username]: msg
         });
 
-        io.emit('recive-msg-dm', chat.chat);
+        io.emit('recive-msg-dm', chatCollection.chat);
 
-        await client.db('personal').collection(collectionName).replaceOne({}, chat, {});
-
+        
+        await client.db('personal').collection(collectionName).replaceOne({}, chatCollection, {});
     } catch (err) {
         console.log(err);
     }
