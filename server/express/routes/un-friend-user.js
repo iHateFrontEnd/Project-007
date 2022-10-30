@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
 
-async function unFriendUser(username, userIndex, fUsername, res) {
+async function unFriendUser(username, fUsername, res) {
     const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
 
     const client = new MongoClient(uri);
@@ -10,39 +10,32 @@ async function unFriendUser(username, userIndex, fUsername, res) {
     try {
         await client.connect();
 
-        const users = await client.db('user-data').collection('user').findOne({});
-
         var collectionName;
-        
-        //searching for friend's index in friends arr
-        for(let i = 0; i <= users.users[userIndex].friends.length; i++) {
-            let friends = users.users[userIndex].friends[i];
+    
+        var userCollection = await client.db('users').collection(username).findOne({});
 
-            if (friends.username == fUsername) {
-                collectionName = friends.collectionName;
-                users.users[userIndex].friends.splice(i, 1);
+        for(let i = 0; i <= userCollection.friends.length; i++) {
+            if(userCollection.friends[i].username == fUsername) {
+                userCollection.friends.splice(i, 1);
+                break
+            }
+        }
+
+        await client.db('users').collection(username).replaceOne({}, userCollection, {});
+
+        var fUserCollection = await client.db('users').collection(fUsername).findOne({});
+
+        for(let i = 0; i <= fUserCollection.friends.length - 1; i++) {
+            if(fUserCollection.friends[i].username == username) {
+                collectionName = fUserCollection.friends[i].collectionName;
+                fUserCollection.friends.splice(i, 1);
                 break;
             }
         }
 
-        //finding fUserIndex
-        for (var fUserIndex = 0; fUserIndex <= users.users.length; fUserIndex++) {
-            if (users.users[fUserIndex].username == fUsername) break;
-        }
-
-        for(let i = 0; i <= users.users[fUserIndex].friends.length; i++) {
-            let friend = users.users[fUserIndex].friends[i];
-
-            if(friend.username == username) {
-                users.users[fUserIndex].friends.splice(i, 1);
-                break;
-            }
-        }
-
-        await client.db('user-data').collection('user').replaceOne({}, users, {});
+        await client.db('users').collection(fUsername).replaceOne({}, fUserCollection, {});
 
         await client.db('personal').collection(collectionName).drop();
-
     } catch(err) {
         console.log(err);
     }
@@ -50,11 +43,10 @@ async function unFriendUser(username, userIndex, fUsername, res) {
 
 
 router.post('/', (req, res) => {
-    const userIndex = req.body.userIndex;
     const username = req.body.username;
     const fUsername = req.body.fUsername;
 
-    unFriendUser(username, userIndex, fUsername, res);
+    unFriendUser(username, fUsername, res);
 });
 
 module.exports = router;

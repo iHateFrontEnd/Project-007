@@ -14,7 +14,6 @@ function unFriend() {
     },
     body: JSON.stringify({
       username: user.username,
-      userIndex: user.userIndex,
       fUsername: currentDmData.chattingWith
     })
   }
