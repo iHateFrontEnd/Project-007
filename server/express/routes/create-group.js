@@ -3,7 +3,7 @@ const router = express.Router();
 const configFile = require('../../config.json');
 const { MongoClient } = require('mongodb');
 
-async function createGroup(username, groupName, userIndex, res) {
+async function createGroup(username, groupName, res) {
     const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
 
     const client = new MongoClient(uri);
@@ -11,10 +11,10 @@ async function createGroup(username, groupName, userIndex, res) {
     try {
         await client.connect();
 
-        const users = await client.db('user-data').collection('user').findOne({});
-        users.users[userIndex].groups.push(groupName);
+        var userCollection = await client.db('users').collection(username).findOne({});
+        userCollection.groups.push(groupName);
 
-        await client.db('user-data').collection('user').replaceOne({}, users, {});
+        await client.db('users').collection(username).replaceOne({}, userCollection, {});
 
         await client.db('groups').createCollection(groupName);
 
@@ -30,10 +30,10 @@ async function createGroup(username, groupName, userIndex, res) {
 
 router.post('/', (req, res) => {
     const username = req.body.username;
-    const groupName = req.body.groupName.replaceAll(' ', '-');
-    const userIndex = req.body.userIndex;
+    const groupName = req.body.groupName;
+    console.log(groupName);
 
-    createGroup(username, groupName, userIndex, res);
+    createGroup(username, groupName, res);
 
     res.end();
 });

@@ -20,7 +20,6 @@ async function saveGroup() {
         },
         body: JSON.stringify({
             groupName: trimedGroupName,
-            userIndex: user.userIndex,
             username: user.username
         })
     }
