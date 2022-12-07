@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Homepage from './components/homepage/Homepage';
 import GroupChat from './components/group-chat/GroupChat';
 import DmChat from './components/dm-chat/DmChat';
 
 export default function trimMsg(data, chatType, setChat) {
-  console.log(data);
-
   var stringMsg = JSON.stringify(data);
 
   var trimedMsg = stringMsg.replaceAll('"', '');
@@ -36,19 +34,18 @@ export default function trimMsg(data, chatType, setChat) {
     );
   }
 
+  const root = createRoot(document.getElementById('root'));
+
   if (chatType === 'dm') {
+
     if (setChat === null) {
-      ReactDOM.render(
-        <Homepage frame={<DmChat chat={msgArr} />} />, document.getElementById('root')
-      );
+      root.render(<Homepage frame={<DmChat chat={msgArr} />} />);
     } else {
       setChat(msgArr);
     }
   } else {
     if (setChat === null) {
-      ReactDOM.render(
-        <Homepage frame={<GroupChat chat={msgArr} />} />, document.getElementById('root')
-      );
+      root.render(<Homepage frame={<GroupChat chat={msgArr} />} />);
     } else {
       setChat(msgArr);
     }

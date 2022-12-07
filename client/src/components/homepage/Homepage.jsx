@@ -1,53 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Scrollbars from 'react-custom-scrollbars-2';
 import AddFriend from '../add-friend/AddFriend';
 import JoinGroup from '../join-group/JoinGroup';
 import TopBar from '../top-bar/TopBar';
 import renderChat from '../../renderChat';
 import './Homepage.css';
-
-var groupsArr = [];
-var friendsArr = [];
-
-var chatData = {
-  friends: [],
-  groups: []
-}
-
-var catchCounter = 0;
-
-function renderChatData() {
-  try {
-    chatData = JSON.parse(localStorage.getItem('chatData'));
-
-    if (chatData.friends.length === 0 && chatData.groups.length === 0) {
-      chatButtonsForFriends('add');
-      chatButtonsForGroups('add');
-    } else if (chatData.friends.length > 0 && chatData.groups.length > 0) {
-      chatButtonsForFriends('buttons');
-      chatButtonsForGroups('buttons');
-    } else if (chatData.friends.length === 0 && chatData.groups.length > 0) {
-      chatButtonsForGroups('buttons');
-      chatButtonsForFriends('add');
-    } else if (chatData.friends.length > 0 && chatData.groups.length === 0) {
-      chatButtonsForFriends('buttons');
-      chatButtonsForGroups('add');
-    }
-  } catch (err) {
-    console.log(err);
-
-    if (catchCounter === 3) {
-      renderChatData();
-    }
-  }
-}
-
-renderChatData();
+import { useState, useEffect } from 'react';
 
 //this function pushes the buttons for groups
-function chatButtonsForGroups(type) {
-  if (type === 'add') {
+function genGroupBtn(chatData) {
+  var groupsArr = [];
+
+  if (chatData.length == 0) {
     groupsArr.push(
       <button onClick={renderAddGroups} className='addFriendsGroups'>Create or join groups</button>
     );
@@ -68,11 +33,15 @@ function chatButtonsForGroups(type) {
       </>
     );
   }
+
+  return groupsArr;
 }
 
 //this function pushes the button for friends
-function chatButtonsForFriends(type) {
-  if (type === 'add') {
+function genFriendsBtn(chatData) {
+  var friendsArr = [];
+
+  if (chatData.length == 0) {
     friendsArr.push(
       <button onClick={renderAddFriends} className='addFriendsGroups'>add friends</button>
     );
@@ -93,57 +62,65 @@ function chatButtonsForFriends(type) {
       </>
     );
   }
+
+  return friendsArr;
 }
 
 //rendering the page to create or join groups
 function renderAddGroups() {
-  ReactDOM.render(
-    <Homepage frame={JoinGroup} />, document.getElementById('root')
-  );
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Homepage frame={JoinGroup} />);
 }
 
 //rendering the page to make friends
 function renderAddFriends() {
-  ReactDOM.render(
-    <Homepage frame={AddFriend} />, document.getElementById('root')
-  );
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Homepage frame={AddFriend} />);
 }
 
 //homepage
-export default class Homepage extends React.Component {
-  render() {
-    return (
-      <>
-        <TopBar />
+export default function Homepage(props) {
+  const [friends, setFriends] = useState([]);
+  const [groups, setGroups] = useState([]);
 
-        <table>
-          <tbody>
-            <tr>
-              <td className='navBarTd'>
-                <Scrollbars style={{ width: "100%", height: "100%" }}>
-                  <div className='navBar' id='navBar'>
-                    <h2>Chat with: </h2>
+  useEffect(() => {
+    const chatData = JSON.parse(localStorage.getItem('chatData'));
 
-                    <div className='friendsContainer' id='friendsContainer'>
-                      {friendsArr}
-                    </div>
+    setFriends(genFriendsBtn(chatData));
+    setGroups(genGroupBtn(chatData));
+  }, []);
 
-                    <h2>Chat in: </h2>
+  return (
+    <>
+      <TopBar />
 
-                    <div className='groupsContainer' id='groupsContainer'>
-                      {groupsArr}
-                    </div>
+      <table>
+        <tbody>
+          <tr>
+            <td className='navBarTd'>
+              <Scrollbars style={{ width: "100%", height: "100%" }}>
+                <div className='navBar' id='navBar'>
+                  <h2>Chat with: </h2>
+
+                  <div className='friendsContainer' id='friendsContainer'>
+                    {friends}
                   </div>
-                </Scrollbars>
-              </td>
 
-              <td className='renderTd'>
-                {this.props.frame}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </>
-    );
-  }
+                  <h2>Chat in: </h2>
+
+                  <div className='groupsContainer' id='groupsContainer'>
+                    {groups}
+                  </div>
+                </div>
+              </Scrollbars>
+            </td>
+
+            <td className='renderTd'>
+              {props.frame}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </>
+  );
 }

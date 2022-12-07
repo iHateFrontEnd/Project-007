@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import configFile from '../../config.json';
 import Homepage from '../../components/homepage/Homepage';
 import Logo from '../../components/homepage/Logo';
-import App from '../../App';
 import { io } from 'socket.io-client';
 import './Requests.css';
 
@@ -27,9 +26,8 @@ class Requests extends React.Component {
 
 //rendering homepage
 function renderHomepage() {
-    ReactDOM.render(
-        <Homepage frame={Logo} />, document.getElementById('root')
-    );
+    const root = createRoot(document.getElementById('root'));
+    root.render(<Homepage frame={Logo} />);
 }
 
 const socket = io(configFile.websocketServerURL);
@@ -37,23 +35,29 @@ const socket = io(configFile.websocketServerURL);
 //accepting friend requests
 function acceptRequest(acceptedUsername) {
     var chatData = JSON.parse(localStorage.getItem('chatData'));
-    chatData.friends.push(acceptedUsername);
+    chatData.friends.push({
+        username: acceptedUsername,
+        collectionName: `${user.username}_${acceptedUsername}`
+    });
 
     localStorage.setItem('chatData', JSON.stringify(chatData))
 
     socket.emit('accept-request', acceptedUsername, user.username);
 
-    window.location.reload();
+    renderHomepage();
 }
 
 socket.on('added-friend', (username, fUsername) => {
     if (user.username === fUsername) {
         var chatData = JSON.parse(localStorage.getItem('chatData'));
-        chatData.friends.push(username);
+        chatData.friends.push({
+            username: username,
+            collectionName: `${username}_${fUsername}`
+        });
 
         localStorage.setItem('chatData', JSON.stringify(chatData));
 
-        window.location.reload();
+        renderHomepage();
     }
 });
 
@@ -85,7 +89,7 @@ export default async function loadFriendRequests() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: user.username 
+            username: user.username
         })
     }
 
@@ -119,7 +123,6 @@ export default async function loadFriendRequests() {
         );
     }
 
-    await ReactDOM.render(
-        <Requests requests={friendRequestsArr} />, document.getElementById('root')
-    );
+    const root = createRoot(document.getElementById('root'));
+    await root.render(<Requests requests={friendRequestsArr} />);
 }
