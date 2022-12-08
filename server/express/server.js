@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 app.use(
   cors({
-    origin: 'http://192.168.1.111:3000'
+    origin: "*"
   })
 );
 app.use(express.json());
@@ -25,6 +25,7 @@ const removeUser = require('./routes/remove-user');
 const unFriendUser = require('./routes/un-friend-user');
 const loadGroupData = require('./routes/load-group-data')
 const allowUsers = require('./routes/allow-users');
+const clearDmChat = require('./routes/clear-dm-chat');
 
 app.get('/', (req, res) => {
   res.json('Hello world');
@@ -77,5 +78,8 @@ app.use('/un-friend-user', unFriendUser);
 
 //allowing a user who requested to join a group
 app.use('/allow-user', allowUsers);
+
+//clearing dm chat
+app.use('/clear-dm-chat', clearDmChat);
 
 app.listen(process.env.PORT || 4000, () => console.log('express server'));
