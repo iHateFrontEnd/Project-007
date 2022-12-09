@@ -3,35 +3,25 @@ const router = express.Router();
 const { MongoClient } = require('mongodb');
 
 async function addPerson(username, groupName, res) {
-  const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
+  const uri = 'mongodb+srv://rushabh:suketujan22@cluster.tmklqqd.mongodb.net/?retryWrites=true&w=majority'
 
   const client = new MongoClient(uri);
 
   try {
     await client.connect();
 
-    const users = await client.db('user-data').collection('user').findOne({});
+    const user = await client.db('users').collection(username).findOne({});
 
-    //checking if the user to be added exist's
-    var userFound = false;
-    
-    for(var userIndex = 0; userIndex <= users.users.length - 1; userIndex++) {
-      if(users.users[userIndex].username == username) {
-        userFound = true;
-        break;
-      }
-    }
-
-    if(userFound == true) {
+    if (user != null) {
       //adding user to the group
       const group = await client.db('groups').collection(groupName).findOne({})
       group.permittedUsers.push(username);
 
       await client.db('groups').collection(groupName).replaceOne({}, group, {});
 
-      users.users[userIndex].groups.push(groupName);
+      user.groups.push(groupName);
 
-      await client.db('user-data').collection('user').replaceOne({}, users, {});
+      await client.db('users').collection(username).replaceOne({}, user, {});
 
       res.json({
         status: 'success'
@@ -42,7 +32,7 @@ async function addPerson(username, groupName, res) {
         reason: 'user not found'
       });
     }
-  } catch(err) {
+  } catch (err) {
     console.log(err);
   }
 

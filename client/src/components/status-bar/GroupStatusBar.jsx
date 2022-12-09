@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import AddPeople from '../group-chat/AddPeople';
 import Homepage from '../homepage/Homepage';
 import Settings from '../group-chat/settings/Settings';
@@ -9,9 +9,8 @@ import './StatusBar.css';
 const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
 
 function addPeople() {
-  ReactDOM.render(
-    <Homepage frame={<AddPeople />} />, document.getElementById('root')
-  );
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Homepage frame={<AddPeople />} />);
 }
 
 async function leaveGroup() {
@@ -40,9 +39,8 @@ async function leaveGroup() {
 }
 
 function renderSettings() {
-  ReactDOM.render(
-    <Homepage frame={<Settings />} />, document.getElementById('root')
-  );
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Homepage frame={<Settings />} />);
 }
 
 export default class GroupStatusBar extends React.Component {
