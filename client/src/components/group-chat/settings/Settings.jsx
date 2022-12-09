@@ -5,6 +5,7 @@ import RequestedUsers from './RequestedUsers';
 import RemovePeople from './RemovePeople';
 import Homepage from '../../homepage/Homepage';
 import configFile from '../../../config.json';
+import renderChat from '../../../renderChat';
 import './Settings.css';
 
 function renderRemovePeople() {
@@ -25,6 +26,36 @@ function renderRequestedUsers() {
   );
 }
 
+function clearChat() {
+  const chatData = JSON.parse(localStorage.getItem('chatData'));
+  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+
+  var groupName;
+
+  for (var i = 0; i <= chatData.groups.length; i++) {
+    if (chatData.groups[i] == currentGroupData.groupName) {
+      groupName = chatData.groups[i];
+      break;
+    }
+  }
+
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      collectionName: groupName
+    })
+  }
+
+  fetch(`${configFile.serverURL}/clear-group-chat`, options);
+
+  alert('All the messages in the group in deleted');
+
+  renderChat(i, 'network', 'groups', null);
+}
+
 export default class Settings extends React.Component {
   render() {
     return (
@@ -39,6 +70,9 @@ export default class Settings extends React.Component {
 
         <h2 className='groupName-heading'>➫ Remove some people from the group (for fun)</h2>
         <button className='settings-btn' onClick={renderRemovePeople}>Remove people</button>
+
+        <h2 className='groupName-heading'>➫ Clear the chat history in this group:</h2>
+        <button className='settings-btn' onClick={clearChat}>Clear history</button>
       </div>
     );
   }

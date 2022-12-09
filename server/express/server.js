@@ -26,6 +26,7 @@ const unFriendUser = require('./routes/un-friend-user');
 const loadGroupData = require('./routes/load-group-data')
 const allowUsers = require('./routes/allow-users');
 const clearDmChat = require('./routes/clear-dm-chat');
+const clearGroupChat = require('./routes/clear-group-chat');
 
 app.get('/', (req, res) => {
   res.json('Hello world');
@@ -81,5 +82,8 @@ app.use('/allow-user', allowUsers);
 
 //clearing dm chat
 app.use('/clear-dm-chat', clearDmChat);
+
+//clearing group chat 
+app.use('/clear-group-chat', clearGroupChat);
 
 app.listen(process.env.PORT || 4000, () => console.log('express server'));

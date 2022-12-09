@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import configFile from '../../config.json';
 import CreateGroup from '../create-group/CreateGroup';
 import Homepage from '../homepage/Homepage';
@@ -37,9 +37,8 @@ async function requestToJoin() {
 };
 
 function renderCreateGroup() {
-  ReactDOM.render(
-    <Homepage frame={CreateGroup} />, document.getElementById('root')
-  );
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Homepage frame={CreateGroup} />);
 }
 
 const JoinGroup = (

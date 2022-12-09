@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import configFile from '../../config.json';
+import { createRoot } from 'react-dom/client';
 import Homepage from '../homepage/Homepage';
 import Logo from '../homepage/Logo';
 import '../../App.css';
@@ -30,7 +30,8 @@ async function saveGroup() {
     chatData.groups.push(groupName);
     localStorage.setItem('chatData', JSON.stringify(chatData));
 
-    window.location.reload();
+    const root = createRoot(document.getElementById('root'));
+    root.render(<Homepage frame={Logo} />);
 }
 
 const CreateGroup = (
