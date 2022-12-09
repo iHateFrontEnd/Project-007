@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import AddPeople from '../group-chat/AddPeople';
 import Homepage from '../homepage/Homepage';
 import Settings from '../group-chat/settings/Settings';
+import Logo from '../homepage/Logo';
 import configFile from '../../config.json';
 import './StatusBar.css';
 
@@ -25,7 +26,6 @@ async function leaveGroup() {
     },
     body: JSON.stringify({
       groupName: currentGroupData.groupName,
-      userIndex: user.userIndex,
       username: user.username
     })
   }
@@ -35,7 +35,8 @@ async function leaveGroup() {
 
   localStorage.setItem('chatData', JSON.stringify(data));
 
-  window.location.reload();
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Homepage frame={Logo} />);
 }
 
 function renderSettings() {
