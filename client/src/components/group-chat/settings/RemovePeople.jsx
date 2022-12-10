@@ -1,7 +1,7 @@
 import React from "react";
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Homepage from '../../homepage/Homepage';
-import Settings from "./Settings";
+import Logo from "../../homepage/Logo";
 import configFile from '../../../config.json';
 
 var currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
@@ -27,9 +27,8 @@ function removeUser(index) {
   currentGroupData.permittedUsers.splice(index, 1);
   localStorage.setItem('currentGroupData', JSON.stringify(currentGroupData));
 
-  ReactDOM.render(
-    <Homepage frame={<Settings />} />, document.getElementById('root')
-  );
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Homepage frame={<Logo />} />);
 
   alert('User successfully kicked :)');
 }

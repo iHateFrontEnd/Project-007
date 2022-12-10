@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import ViewMembers from './ViewMembers';
 import RequestedUsers from './RequestedUsers';
 import RemovePeople from './RemovePeople';
@@ -8,22 +8,18 @@ import configFile from '../../../config.json';
 import renderChat from '../../../renderChat';
 import './Settings.css';
 
+const root = createRoot(document.getElementById('root'));
+
 function renderRemovePeople() {
-  ReactDOM.render(
-    <Homepage frame={<RemovePeople />} />, document.getElementById('root')
-  );
+  root.render(<Homepage frame={<RemovePeople />} />);
 }
 
 function renderViewMembers() {
-  ReactDOM.render(
-    <Homepage frame={<ViewMembers />} />, document.getElementById('root')
-  );
+  root.render(<Homepage frame={<ViewMembers />} />);
 }
 
 function renderRequestedUsers() {
-  ReactDOM.render(
-    <Homepage frame={<RequestedUsers />} />, document.getElementById('root')
-  );
+  root.render(<Homepage frame={<RequestedUsers />} />);
 }
 
 function clearChat() {

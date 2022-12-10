@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Settings from "./Settings";
 import Homepage from "../../homepage/Homepage";
+import renderChat from "../../../renderChat";
 import loadGroupData from "../../../loadGroupData";
 import configFile from '../../../config.json';
 import './Settings.css';
-
 
 var requestedUsers = [];
 
@@ -19,21 +19,25 @@ try {
       <li>Nobody yet has made request :(</li>
     );
   } else {
-    for (let i = 0; i <= currentGroupData.requestedUsers.length - 1; i++) {
+    var i = -1;
+
+    currentGroupData.requestedUsers.map(username => {
+      i++;
+
       requestedUsers.push(
         <div key={i} className='user'>
-          <p className='username'>{currentGroupData.requestedUsers[i]}</p>
+          <p className='username'>{username}</p>
 
           <button className='allow-user' onClick={() => allowUser(i)}>✓</button>
         </div>
       );
-    }
+    });
   }
 } catch (err) {
   console.log(err);
 }
 
-async function allowUser(user) {
+function allowUser(user) {
   const options = {
     method: 'POST',
     headers: {
@@ -45,10 +49,11 @@ async function allowUser(user) {
     })
   }
 
-  const res = await fetch(`${configFile.serverURL}/allow-user`, options);
-  const data = await res.json();
+  fetch(`${configFile.serverURL}/allow-user`, options);
 
-  console.log(data);
+  alert(`${currentGroupData.requestedUsers[user]} is now a part of this group!`);
+
+  renderChat(i, 'network', 'groups', null);
 }
 
 function back() {

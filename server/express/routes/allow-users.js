@@ -1,36 +1,44 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
+const { MongoClient } = require('mongodb');
+
+async function allowUser(groupName, username) {
+    const uri = 'mongodb+srv://rushabh:suketujan22@cluster.tmklqqd.mongodb.net/?retryWrites=true&w=majority'
+
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+
+        const groupCollection = await client.db('groups').collection(groupName).findOne({});
+
+        for (let i = 0; i <= groupCollection.requestedUsers.length; i++) {
+            if (groupCollection.requestedUsers[i] == username) {
+                groupCollection.requestedUsers.splice(i, 1);
+                break;
+            }
+        }
+
+        groupCollection.permittedUsers.push(username);
+
+        await client.db('groups').collection(groupName).replaceOne({}, groupCollection, {});
+
+        const userCollection = await client.db('users').collection(username).findOne({});
+        userCollection.groups.push(groupName);
+
+        await client.db('users').collection(username).replaceOne({}, userCollection, {});
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 router.post('/', (req, res) => {
     const groupName = req.body.groupName;
     const username = req.body.username;
 
-    var groupFile = require(`../../groups/${groupName}`);
-    var usersFile = require('../../users.json');
+    allowUser(groupName, username);
 
-    //modifying groups file
-    for(let i = 0; i <= groupFile.requestedUsers.length; i++) {
-        if (groupFile.requestedUsers[i] == username) {
-            groupFile.requestedUsers.splice(i, 1);
-            break;
-        }
-    }
-
-    groupFile.permittedUsers.push(username);
-
-    //modifying users.json
-    for(var userIndex = 0; userIndex <= usersFile.users.length - 1; userIndex++) {
-        if (usersFile.users[userIndex].username == username) {
-            usersFile.users[userIndex].groups.push(groupName);
-            console.log(usersFile.users[userIndex]);
-        }
-    }
-
-    //this is to be changed
-    fs.writeFile()
-
-    res.send('hello world');
+    console.log('in this route');
 });
 
 module.exports = router;

@@ -12,11 +12,11 @@ loadGroupData();
 const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
 
 try {
-  for (let i = 0; i <= currentGroupData.permittedUsers.length - 1; i++) {
+  currentGroupData.permittedUsers.map(users => {
     permittedUsers.push(
-      <li key={i} className='users'>{currentGroupData.permittedUsers[i]}</li>
+      <li key={users} className='users'>{users}</li>
     );
-  }
+  })
 } catch (err) {
   console.log(err);
 }
