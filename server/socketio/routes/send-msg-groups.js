@@ -1,7 +1,8 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
 async function sendGroupsMsg(username, typedMsg, groupName, io) {
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
+    const uri = process.env.DB_URL;
 
     const client = new MongoClient(uri);
 
@@ -13,8 +14,9 @@ async function sendGroupsMsg(username, typedMsg, groupName, io) {
         io.emit('recive-msg-groups', groupCollection.chat);
 
         await client.db('groups').collection(groupName).replaceOne({}, groupCollection, {});
-    } catch(err) {
+    } catch (err) {
         console.log(err);
+
     }
 }
 

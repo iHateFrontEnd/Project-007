@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
-const usersFile = require('../../users.json');
+require('dotenv').config();
 
 async function loginUser(username, password, res) {
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
-
+    const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
 
     try {

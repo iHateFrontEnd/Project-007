@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const users = require('../../users.json');
 const { MongoClient } = require('mongodb');
-
+require('dotenv').config();
 //f refers to friend
 async function addFriend(res, userIndex, username, fUsername) {
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retrywrites=true&w=majority'
-
+    const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
 
     try {
@@ -31,7 +30,7 @@ async function addFriend(res, userIndex, username, fUsername) {
                 status: 'success'
             });
         }
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 }

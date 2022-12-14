@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
 const { MongoClient } = require('mongodb');
-
+require('dotenv').config();
 async function saveNonStaticFiles(res) {
-  const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
-
+  const uri = process.env.DB_URL;
   const client = new MongoClient(uri);
 
   try {

@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
-
+require('dotenv').config();
 async function loadChat(res, fUsername, username) {
 
     console.log(fUsername, username);
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
-
+    const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
 
     try {
@@ -34,8 +33,7 @@ async function loadChat(res, fUsername, username) {
 }
 
 async function loadGroupChat(groupName, res) {
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
-
+    const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
 
     try {
@@ -43,14 +41,14 @@ async function loadGroupChat(groupName, res) {
 
         const group = await client.db('groups').collection(groupName).findOne({});
 
-        if(group == null) {
+        if (group == null) {
             res.json({
                 permittedUsers: [],
                 requestedUsers: [],
                 chat: "",
                 groupName: groupName
             });
-            
+
         } else {
             res.json({
                 permittedUsers: group.permittedUsers,
@@ -66,8 +64,7 @@ async function loadGroupChat(groupName, res) {
 }
 
 async function chatData(username, res) {
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
-
+    const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
 
     try {

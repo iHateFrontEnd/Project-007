@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
-const configFile = require('../../config.json');
+require('dotenv').config(); const configFile = require('../../config.json');
 
 async function createUser(username, password) {
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority';
+    const uri = process.env.DB_URL;
 
     const client = new MongoClient(uri);
 

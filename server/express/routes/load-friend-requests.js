@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
-
-async function loadFriendReqs(res, username) { 
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
-
+require('dotenv').config();
+async function loadFriendReqs(res, username) {
+    const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
 
     try {
@@ -15,7 +14,7 @@ async function loadFriendReqs(res, username) {
         res.json({
             requests: userCollection.incomingRequests
         });
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 }

@@ -1,8 +1,4 @@
 /client/node_modules
-/server/express/node_modules
-/server/socketio/node_modules
-/server/personal
-/server/groups
-/start-app/node_modules
-/test
-/Vattagutar
+/server/*
+start-app/*
+Procfile

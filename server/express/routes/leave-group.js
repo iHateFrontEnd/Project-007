@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
-
+require('dotenv').config();
 async function leaveGroup(username, groupName, res) {
   const uri = 'mongodb+srv://rushabh:suketujan22@cluster.tmklqqd.mongodb.net/?retryWrites=true&w=majority'
 

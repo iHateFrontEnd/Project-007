@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
-
+require('dotenv').config();
 async function declineRequest(username, toDeclineUserIndex) {
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retrywrites=true&w=majority'
-
+    const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
 
     try {
@@ -12,10 +11,10 @@ async function declineRequest(username, toDeclineUserIndex) {
 
         var userCollection = await client.db('users').collection(username).findOne({});
 
-        userCollection.incomingRequests.splice(toDeclineUserIndex, 1)    ;
+        userCollection.incomingRequests.splice(toDeclineUserIndex, 1);
 
         await client.db('users').collection(username).replaceOne({}, userCollection, {});
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 }

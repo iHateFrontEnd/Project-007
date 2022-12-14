@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const configFile = require('../../config.json');
 const { MongoClient } = require('mongodb');
-
+require('dotenv').config();
 async function createGroup(username, groupName, res) {
-    const uri = 'mongodb+srv://rushabh:suketujan22@test-base.7sxb1.mongodb.net/?retryWrites=true&w=majority'
-
+    const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
 
     try {
@@ -23,7 +22,7 @@ async function createGroup(username, groupName, res) {
         configFile.groupChatLayout.permittedUsers.push(username);
 
         await client.db('groups').collection(groupName).insertOne(configFile.groupChatLayout);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 }
