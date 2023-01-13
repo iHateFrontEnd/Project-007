@@ -4,7 +4,7 @@ import configFile from '../../config.json';
 import Homepage from '../../components/homepage/Homepage';
 import Logo from '../../components/homepage/Logo';
 import { io } from 'socket.io-client';
-import ClipLoader from 'react-spinners/ClipLoader';
+import PropagateLoader from 'react-spinners/PropagateLoader';
 import './Requests.css';
 
 var friendRequestsArr = [];
@@ -72,11 +72,10 @@ export default function Requests() {
             {
                 loading ?
 
-                    <ClipLoader
-                        size={150}
+                    <PropagateLoader
                         color={"#ffffff"}
-
                         loading={loading}
+                        className="loading"
                     />
 
                     :

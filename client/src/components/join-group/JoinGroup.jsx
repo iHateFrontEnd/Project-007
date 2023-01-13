@@ -38,27 +38,26 @@ async function requestToJoin() {
 
 function renderCreateGroup() {
   const root = createRoot(document.getElementById('root'));
-  root.render(<Homepage frame={CreateGroup} />);
+  root.render(<Homepage frame={<CreateGroup />} />);
 }
 
-const JoinGroup = (
-  <div className='joinGroup' id='joinGroup'>
-    <h1>Enter group name to join: </h1>
+export default function JoinGroup() {
+  return (
+    <div className='joinGroup' id='joinGroup'>
+      <h1>Enter group name to join: </h1>
 
-    <input className='concInfoInps' id='groupName' placeholder='Enter group name' />
+      <input className='concInfoInps' id='groupName' placeholder='Enter group name' />
 
-    <br />
-    <br />
-    <br />
+      <br />
+      <br />
+      <br />
 
-    <button className='loginBtn' onClick={requestToJoin}>Send request</button>
+      <button className='loginBtn' onClick={requestToJoin}>Send request</button>
 
-    <br />
-    <br />
+      <br />
+      <br />
 
-    <button className='loginBtn' onClick={renderCreateGroup}>Create a group</button>
-  </div>
-);
-
-
-export default JoinGroup;
+      <button className='loginBtn' onClick={renderCreateGroup}>Create a group</button>
+    </div>
+  );
+}

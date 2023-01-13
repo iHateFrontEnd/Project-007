@@ -4,12 +4,31 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import AddFriend from '../add-friend/AddFriend';
 import JoinGroup from '../join-group/JoinGroup';
 import TopBar from '../top-bar/TopBar';
-import renderChat from '../../renderChat';
+import GroupChat from '../group-chat/GroupChat';
+import DmChat from '../dm-chat/DmChat';
 import './Homepage.css';
 import { useState, useEffect } from 'react';
 
+//rendering the page to create or join groups
+function renderAddGroups() {
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Homepage frame={<JoinGroup />} />);
+}
+
+//rendering the page to make friends
+function renderAddFriends() {
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Homepage frame={AddFriend} />);
+}
+
 //this function pushes the buttons for groups
 function genGroupBtn(chatData) {
+  const root = createRoot(document.getElementById('root'));
+
+  const renderGroupChat = (data) => {
+    root.render(<Homepage frame={<GroupChat data={data} />} />)
+  }
+
   var groupsArr = [];
 
   if (chatData.length == 0) {
@@ -18,9 +37,16 @@ function genGroupBtn(chatData) {
     );
   } else {
     for (let i = 0; i <= chatData.groups.length - 1; i++) {
+      let data = {
+        index: i,
+        toUse: 'network',
+        chatType: 'groups',
+        setChat: null
+      }
+
       groupsArr.push(
         <p>
-          <button className="groups" onClick={() => renderChat(i, 'network', 'groups', null)} id={`group${i}`}>{chatData.groups[i]}</button>
+          <button className="groups" onClick={() => renderGroupChat(data)} id={`group${i}`}>{chatData.groups[i]}</button>
         </p>
       );
     }
@@ -40,16 +66,30 @@ function genGroupBtn(chatData) {
 //this function pushes the button for friends
 function genFriendsBtn(chatData) {
   var friendsArr = [];
+  const root = createRoot(document.getElementById('root'));
+  
+  const renderDmChat = (data) => {
+    root.render(<Homepage frame={<DmChat data={data} />} />);
+  }
 
   if (chatData.length == 0) {
     friendsArr.push(
       <button onClick={renderAddFriends} className='addFriendsGroups'>add friends</button>
     );
   } else {
+
     for (let i = 0; i <= chatData.friends.length - 1; i++) {
+      let data = {
+        index: i,
+        toUse: 'network',
+        chatType: 'dm',
+        setChat: null,
+        sendMsg: false
+      }
+
       friendsArr.push(
         <p>
-          <button className='friends' onClick={() => { renderChat(i, 'network', 'dm', null) }} id={`friend${i}`}>{chatData.friends[i].username}</button>
+          <button className='friends' onClick={() => {renderDmChat(data)}} id={`friend${i}`}>{chatData.friends[i].username}</button>
         </p>
       );
     }
@@ -64,18 +104,6 @@ function genFriendsBtn(chatData) {
   }
 
   return friendsArr;
-}
-
-//rendering the page to create or join groups
-function renderAddGroups() {
-  const root = createRoot(document.getElementById('root'));
-  root.render(<Homepage frame={JoinGroup} />);
-}
-
-//rendering the page to make friends
-function renderAddFriends() {
-  const root = createRoot(document.getElementById('root'));
-  root.render(<Homepage frame={AddFriend} />);
 }
 
 //homepage

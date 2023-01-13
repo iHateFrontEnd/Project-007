@@ -68,16 +68,14 @@ function clearChat() {
   renderChat(i, 'network', 'dm', null);
 }
 
-export default class DmChatStatusBar extends React.Component {
-  render() {
-    return (
-      <div className='dm-status-bar'>
-        <h4>Chatting with: {this.props.fUsername}</h4>
+export default function DmStatusBar(props) {
+  return (
+    <div className='dm-status-bar'>
+      <h4>Chatting with: {props.data.chattingWith} </h4>
 
-        <button className='statusBarBtns' onClick={unFriend}>un-friend</button>
+      <button className='statusBarBtns' onClick={unFriend}>un-friend</button>
 
-        <button className='statusBarBtns' onClick={clearChat}>Clear chat</button>
-      </div>
-    );
-  }
+      <button className='statusBarBtns' onClick={clearChat}>Clear chat</button>
+    </div>
+  );
 }

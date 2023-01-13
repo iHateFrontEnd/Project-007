@@ -21,8 +21,6 @@ export default function trimMsg(data, chatType, setChat) {
   //removing } (this is the last charecter of all the msg's)
   rawMsg[0][rawMsg[0].length - 1] = rawMsg[0][rawMsg[0].length - 1].slice(0, -1) + '';
 
-  console.log(rawMsg);
-
   if (chatType === 'groups') sessionStorage.setItem('rawMsg', stringMsg);
   else if (chatType === 'dm') sessionStorage.setItem('dmRawMsg', stringMsg);
 
@@ -34,18 +32,17 @@ export default function trimMsg(data, chatType, setChat) {
     );
   }
 
-  const root = createRoot(document.getElementById('root'));
-
   if (chatType === 'dm') {
-
     if (setChat === null) {
-      root.render(<Homepage frame={<DmChat chat={msgArr} />} />);
+      return msgArr;
     } else {
       setChat(msgArr);
     }
   } else {
     if (setChat === null) {
-      root.render(<Homepage frame={<GroupChat chat={msgArr} />} />);
+      console.log(msgArr);
+      return msgArr;
+        
     } else {
       setChat(msgArr);
     }
