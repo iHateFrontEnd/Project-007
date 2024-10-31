@@ -1,5 +1,5 @@
-# Vattagutar:
-Vattagutar is a simple to use chatting. This is app is looking to compete with Google Hangouts, Whatsapp, and discord. The word Vattagutar stands for "Chatty person" in Kannada.
+# Project-007:
+Project-007 is a simple to use chatting. This is app is looking to compete with Google Hangouts, Whatsapp, and discord. This app was named Project-007 since it got very little attention over the course of 3 years.
 
 Right now the project is in its infancy so there are a lot of features left to be added, the main motive of this app is the privacy and the control that the users will have over the app. Since this project is open source users or other people can identify security bugs and fix them, making it MORE SECURE!!
 
@@ -16,16 +16,16 @@ This app or project uses ReactJS for front-end, ExpressJS and SocketIO (a Web so
 ## Contributers:
 Contributers are always welcome!
 
-<a href = "https://github.com/iHateFrontEnd/Vattagutar/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo = iHateFrontEnd/Vattagutar"/>
+<a href = "https://github.com/iHateFrontEnd/Project-007/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo = iHateFrontEnd/Project-007"/>
 </a>
 
 ## Development
 Install NodeJS from the offical website https://nodejs.org for your operating system.
 
-Clone the repo (The development version): `git clone https://github.com/iHateFrontEnd/Vattagutar.git`
+Clone the repo (The development version): `git clone https://github.com/iHateFrontEnd/Project-007.git`
 
-CD into the project: `cd Vattagutar`
+CD into the project: `cd Project-007`
 
 Run the installer file:
  - For Windows: `./installer.bat`
