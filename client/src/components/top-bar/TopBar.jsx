@@ -1,17 +1,25 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
+import Homepage from '../homepage/Homepage';
+import Logo from '../homepage/Logo';
 import Login from '../login/Login';
 import Profile from '../../pages/profile/Profile';
-import Requests from '../../pages/requests/Requests';
+import loadFriendRequests from '../../pages/requests/Requests';
 import './TopBar.css';
 
-const root = createRoot(document.getElementById('root'));
+function renderProfile() {
+  ReactDOM.render(
+    <Profile />, document.getElementById('root')
+  );
+}
 
 function signOut() {
   localStorage.clear();
   sessionStorage.clear();
 
-  root.render(<Login />);
+  ReactDOM.render(
+    <Login />, document.getElementById('root')
+  );
 }
 
 export default class TopBar extends React.Component {
@@ -19,8 +27,8 @@ export default class TopBar extends React.Component {
     return (
       <div className="topBar">
         <button className='topBarBtns' onClick={signOut}>Sign out</button>
-        <button className='topBarBtns' onClick={() => root.render(<Requests />)}>Incoming friend requests</button>
-        <button className='topBarBtns' onClick={() => root.render(<Profile />)}>Profile</button>
+        <button className='topBarBtns' onClick={loadFriendRequests}>Incoming friend requests</button>
+        <button className='topBarBtns' onClick={renderProfile}>Profile</button>
       </div>
     );
   }

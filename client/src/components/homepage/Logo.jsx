@@ -3,7 +3,7 @@ import '../../App.css';
 
 const Logo = (
     <div className='logo' id='logo'>
-        <h3>Start chatting</h3>
+        <h3>Click on a group or friend to chat</h3>
     </div>
 );
 

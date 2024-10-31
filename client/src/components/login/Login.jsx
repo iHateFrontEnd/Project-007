@@ -8,7 +8,6 @@ import './Login.css';
 
 //sending username and password to server
 async function login() {
-
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
@@ -48,6 +47,7 @@ async function login() {
       <Homepage frame={Logo} />, document.getElementById('root')
     );
 
+    window.location.reload();
   } else {
     alert('Incorrect username or password, please try again');
   }

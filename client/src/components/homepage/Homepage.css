@@ -60,3 +60,9 @@ h2 {
     border-color: white;
     color: white;
 }
+
+h3 {
+    font-family: 'poppins', sans-serif;
+    font-size: 8vh;
+    color: white;
+}

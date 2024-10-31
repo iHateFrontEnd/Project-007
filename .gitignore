@@ -1,4 +1,4 @@
-/client/node_modules
-/server/*
-start-app/*
-Procfile
+client/node_modules
+server/express/node_modules
+server/socketio/node_modules
+start-app/node_modules

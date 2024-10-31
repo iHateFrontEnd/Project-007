@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
-
-//loading DM chat
 async function loadChat(res, fUsername, username) {
+
+    console.log(fUsername, username);
     const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
 
@@ -25,8 +25,6 @@ async function loadChat(res, fUsername, username) {
 
         const chat = await client.db('personal').collection(collectionName).findOne({});
 
-        console.log(chat);
-
         res.send(chat);
 
     } catch (err) {
@@ -34,7 +32,6 @@ async function loadChat(res, fUsername, username) {
     }
 }
 
-//loading group chat
 async function loadGroupChat(groupName, res) {
     const uri = process.env.DB_URL;
     const client = new MongoClient(uri);
@@ -66,7 +63,6 @@ async function loadGroupChat(groupName, res) {
     }
 }
 
-//returing groups and friends to user
 async function chatData(username, res) {
     const uri = process.env.DB_URL;
     const client = new MongoClient(uri);

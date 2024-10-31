@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import configFile from '../../config.json';
 import { createRoot } from 'react-dom/client';
 import Homepage from '../homepage/Homepage';
 import Logo from '../homepage/Logo';
-import ClipLoader from 'react-spinners/ClipLoader';
 import '../../App.css';
 
 var chatData = JSON.parse(localStorage.getItem('chatData'));
@@ -25,7 +24,7 @@ async function saveGroup() {
         })
     }
 
-   fetch(`${configFile.serverURL}/create-group`, options);
+    await fetch(`${configFile.serverURL}/create-group`, options);
 
     //saving group to local storage
     chatData.groups.push(groupName);
@@ -35,23 +34,21 @@ async function saveGroup() {
     root.render(<Homepage frame={Logo} />);
 }
 
-export default function CreateGroup() {
-    return (
-        <div className='createGroup' id='createGroup'>
-            <>
-                <h1>Enter your group name: </h1>
+const CreateGroup = (
+    <div className='createGroup' id='createGroup'>
+        <h1>Enter your group name: </h1>
 
-                <br />
-                <br />
+        <br />
+        <br />
 
-                <input className='concInfoInps' id='groupName' placeholder='Enter group name' required />
+        <input className='concInfoInps' id='groupName' placeholder='Enter group name' required />
 
-                <br />
-                <br />
-                <br />
+        <br />
+        <br />
+        <br />
 
-                <button className='loginBtn' onClick={() => saveGroup()}>Create</button>
-            </>
-        </div >
-    );
-}
+        <button className='loginBtn' onClick={saveGroup}>Create</button>
+    </div >
+);
+
+export default CreateGroup;

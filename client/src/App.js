@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from './components/login/Login.jsx';
 import Homepage from './components/homepage/Homepage.jsx'; import configFile from './config.json';
-import Logo from './components/homepage/Logo.js';
+import Logo from './components/homepage/Logo.jsx';
 
 //this function loads all the  
 async function loadGroups(user) {

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import PropagateLoader from 'react-spinners/PropagateLoader';
+import React, { useState, useEffect, useRef } from 'react';
 import renderChat from '../../renderChat';
 import GroupStatusBar from '../status-bar/GroupStatusBar';
 import { io } from 'socket.io-client';
-import trimMsg from '../../trimMsg';
 import configFile from '../../config.json';
 import './GroupChat.css';
 
@@ -20,105 +18,59 @@ function sendMsg(setChat, socket) {
 
   updateChat(setChat, socket);
 
-  //clearing the msg input
+  // Clear the message input
   document.getElementById('msg').value = '';
 }
 
 function updateChat(setChat, socket) {
   const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
 
-  //updating the messages
+  // Listening for incoming messages
   socket.on('recive-msg-groups', (msg) => {
     sessionStorage.setItem('rawMsg', JSON.stringify(msg));
 
     for (let i = 0; i <= chatData.groups.length; i++) {
       if (chatData.groups[i] === currentGroupData.groupName) {
-        renderChat(i, 'storage', 'groups', setChat);
+        renderChat(i, 'storage', 'groups', setChat, msg);
         break;
       }
     }
-
-    //scrolling the bottom of the div
-    var chatDiv = document.getElementById('chat');
-    chatDiv.scrollTop = chatDiv.scrollHeight;
   });
 }
 
-//fetching the group data
-async function getGroupData(setLoading, setChat, index) {
-  setLoading(true);
-
-  const chatData = JSON.parse(localStorage.getItem('chatData'));
-
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      toLoad: 'group',
-      groupName: chatData.groups[index]
-    })
-  }
-
-  const res = await fetch(`${configFile.serverURL}/load-chat`, options);
-  const data = await res.json();
-
-  await localStorage.setItem('currentGroupData', JSON.stringify({
-    requestedUsers: data.requestedUsers,
-    permittedUsers: data.permittedUsers,
-    groupName: data.groupName
-  }));
-
-  const msg = trimMsg(data.chat, 'groups', null);
-
-  setLoading(false);
-  setChat(msg);
-}
-
 export default function GroupChat(props) {
-  console.log('in funcitn ');
-
   const [chat, setChat] = useState(props.chat);
-  const [loading, setLoading] = useState(false);
-
-
-  useEffect(() => getGroupData(setLoading, setChat, props.data.index), [props]);
-
-  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
+  const chatEndRef = useRef(null);  // Ref to scroll to the end
   const socket = io(configFile.websocketServerURL);
+  const currentGroupData = JSON.parse(localStorage.getItem('currentGroupData'));
 
-  updateChat(setChat, socket);
+  // Update chat messages
+  useEffect(() => {
+    updateChat(setChat, socket);
+  }, [socket]);
+
+  // Scroll to bottom when chat updates
+  useEffect(() => {
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chat]);  // This will trigger every time chat updates
 
   return (
-    <>
-      {
-        loading ?
-          <PropagateLoader
-            color={"white"}
-            loading={loading}
-            className="loading"
-          />
+    <div className='groupChat' id='groupChat'>
+      <GroupStatusBar groupName={currentGroupData.groupName} />
 
-          :
+      <div className="chat" id='chat' style={{ overflowY: 'auto', height: '62vh' }}>
+        {chat}
+        {/* This empty div acts as the scroll target */}
+        <div ref={chatEndRef} />
+      </div>
 
-          <>
-            <div className='groupChat' id='groupChat'>
+      <div className="enterMsg">
+        <input placeholder='Type a message' type="text" id="msg" className="msg" />
 
-              <GroupStatusBar groupName={currentGroupData.groupName} />
-
-              <div className="chat" id='chat'>
-                {chat}
-              </div>
-
-              <div className="enterMsg">
-                <input placeholder='Type a message' type="text" id="msg" className="msg" />
-
-                <button onClick={() => { sendMsg(setChat, socket) }} className='sendMsg'>Send</button>
-              </div>
-            </div>
-          </>
-      }
-    </>
+        <button onClick={() => { sendMsg(setChat, socket) }} className='sendMsg'>Send</button>
+      </div>
+    </div>
   );
 }

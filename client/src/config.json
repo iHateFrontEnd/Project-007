@@ -1,4 +1,4 @@
 {
-  "serverURL": "http://192.168.1.111:4000",
-  "websocketServerURL": "http://192.168.1.111:5000"
+  "serverURL": "http://localhost:4000",
+  "websocketServerURL": "http://localhost:5000"
 }
