@@ -25,8 +25,16 @@ Install NodeJS from the offical website https://nodejs.org for your operating sy
 
 Clone the repo (The development version): `git clone https://github.com/iHateFrontEnd/Project-007.git`
 
-CD into the project: `cd Project-007`
+CD into the project: 
+</br>
+ `cd Project-007`
 
-Run the installer file:
- - For Windows: `./installer.bat`
- - For Linux: `./installer.sh`
+Installing modules:
+</br>
+ `chmod +x installer.sh &&
+ ./installer.sh`
+
+Run Project-007:
+</br>
+ `chmod +x startMe.sh &&
+ ./startMe.sh`
